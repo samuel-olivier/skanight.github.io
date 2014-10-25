@@ -54,13 +54,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">My Projects</a>
+                        <a href="#portfolio">Portfolio</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#about">About Me</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#links">Links</a>
                     </li>
                 </ul>
             </div>
@@ -107,15 +104,27 @@
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioRaytracer" class="portfolio-link" data-toggle="modal">
+                    <a href="#portfolioLifetracer" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-								<h1>Raytracer</h1>
+								<h1>Lifetracer</h1>
                                 <i class="fa fa-search-plus fa-3x"></i>
 								<p>A physically based renderer</p>
                             </div>
                         </div>
-                        <img src="img/portfolio/raytracer.png" class="img-responsive" alt="">
+                        <img src="img/portfolio/lifetracer.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioClother" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+								<h1>Clother</h1>
+                                <i class="fa fa-search-plus fa-3x"></i>
+								<p>A standard cloth simulation</p>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/clother.png" class="img-responsive" alt="">
                     </a>
                 </div>
             </div>
@@ -127,20 +136,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>About</h2>
+                    <h2>About Me</h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+                    <p>Mainly interested in everything close to the software development, I started to learn programming when I was 14. Later, I studied at Epitech, for Master of Information Technology where I learned deeply how to program, to work with a team and to be professional.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+                    <p>During my fourth year, I spent 2 quarters at UCSD (University of California, San Diego) where I developed my skills in computer graphics (animation and rendering) and algorithms.</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
+                    <a href="data/resume-en.pdf" target="_blanck" class="btn btn-lg btn-outline">
+                        <i class="fa fa-file-pdf-o"></i> Resume
                     </a>
                 </div>
             </div>
@@ -203,21 +212,32 @@
 
     <!-- Portfolio Modals -->
     <div class="portfolio-modal modal fade" id="portfolioNaocar" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content" style="background-color: #18bc9c; padding: 0; height: 100%;">
-            <div class="container" style="height: 100%;">
-                <div class="col-lg-8 col-lg-offset-2" style="position: relative; padding-top: 100px; height: 100%; background-color: #FFF;">
-				<div class="close-modal" data-dismiss="modal">
-					<div class="lr">
-						<div class="rl">
-						</div>
-					</div>
-				</div>
-                <div class="row">
+        <div class="modal-content">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2 modal-column">
+					<div class="row">
                         <div class="modal-body">
                             <h2>Naocar</h2>
                             <hr class="star-primary">
-							<iframe width="710" height="430" src="https://www.youtube.com/embed/ZNQp1UMfRAI" frameborder="0" allowfullscreen></iframe>
-                            <p>NaoCar is a project whose goal is to make the humanoid robot "Nao" drive a child car autonomously. In addition to the very interesting technical part, NaoCar had some success in the world of robotics especially through presentations at various public shows.</p>
+							<div class="videoWrapper">
+								<iframe width="100%" height="auto" src="https://www.youtube.com/embed/ZNQp1UMfRAI" frameborder="0" allowfullscreen></iframe>
+							</div>
+							<div class="row">
+								<div class="col-lg-9">
+									<p>NaoCar is a project whose goal is to make the humanoid robot "Nao" drive a child car autonomously. In addition to the very interesting technical part, NaoCar had some success in the world of robotics especially through presentations at various public shows.</p>
+								</div>
+								<div class="col-lg-3 key-ideas">
+									<p><strong>Key Ideas</strong></p>
+									<ul>
+										<li>> <a href="http://www.aldebaran.com/en/humanoid-robot/nao-robot">Nao</a></li>
+										<li>> Autonomous</li>
+										<li>> <a href="http://en.wikipedia.org/wiki/Kinect">Kinect</a></li>
+										<li>> <a href="http://www.oculus.com/rift/">Oculus Rift</a></li>
+										<li>> <a href="https://www.leapmotion.com/">LeapMotion</a></li>
+										<li>> <a href="http://docs.opencv.org/doc/tutorials/tutorials.html">OpenCV</a></li>
+									</ul>
+								</div>
+							</div>
                             <ul class="list-inline item-details">
                                 <li>Context:
                                     <strong>Student Project</strong>
@@ -233,27 +253,42 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
+					<div class="close-modal" data-dismiss="modal">
+						<div class="lr">
+							<div class="rl">
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="portfolio-modal modal fade" id="portfolioRaytracer" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content" style="background-color: #18bc9c; padding: 0; height: 100%;">
-            <div class="container" style="height: 100%;">
-                <div class="col-lg-8 col-lg-offset-2" style="position: relative; padding-top: 100px; height: 100%; background-color: #FFF;">
-				<div class="close-modal" data-dismiss="modal">
-					<div class="lr">
-						<div class="rl">
-						</div>
-					</div>
-				</div>
-                <div class="row">
+    <div class="portfolio-modal modal fade" id="portfolioLifetracer" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2 modal-column">
+					<div class="row">
                         <div class="modal-body">
-                            <h2>Raytracer</h2>
+                            <h2>Lifetracer</h2>
                             <hr class="star-primary">
-                            <img src="img/portfolio/raytracer-big.png" class="img-responsive img-centered" alt="">
-                            <p>I developped this Physically Based Renderer for the CSE 168 class at UCSD (University of California, San Diego) during the spring 2014 quarter. I learned and used a lot of techniques such as simple pathtracing, photon-mapping, BRDFs etc. Here is my <a href="http://graphics.ucsd.edu/courses/cse168_s14/finals/olivier_samuel/blog.html">final project page</a></p>
+                            <img src="img/portfolio/lifetracer-big.png" class="img-responsive img-centered" alt="">
+							<div class="row">
+								<div class="col-lg-9">
+									<p>I developed this Physically Based Renderer for the CSE 168 class at UCSD (University of California, San Diego) during the Spring 2014 quarter. I learned and used a lot of techniques such as simple pathtracing, photon-mapping, BRDFs etc. Here is my <a href="http://graphics.ucsd.edu/courses/cse168_s14/finals/olivier_samuel/blog.html">final project page</a></p>
+								</div>
+								<div class="col-lg-3 key-ideas">
+									<p><strong>Key Ideas</strong></p>
+									<ul>
+										<li>> 3D</li>
+										<li>> Raytracing</li>
+										<li>> Pathtracing</li>
+										<li>> Photon-mapping</li>
+										<li>> BRDF</li>
+										<li>> 3D Mapping</li>
+									</ul>
+								</div>
+							</div>
                             <ul class="list-inline item-details">
                                 <li>Context:
                                     <strong>Student Project</strong>
@@ -269,7 +304,67 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
+					<div class="close-modal" data-dismiss="modal">
+						<div class="lr">
+							<div class="rl">
+							</div>
+						</div>
+					</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="portfolioClother" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2 modal-column">
+					<div class="row">
+						<div class="modal-body">
+							<h2>Clother</h2>
+							<hr class="star-primary"/>
+							<img src="img/portfolio/clother.png" class="img-responsive img-centered" alt=""/>
+
+							<div class="row">
+								<div class="col-lg-9">
+									<p>I developed this Cloth Simulation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. I simulate the cloth using the spring damper technique and I compute the gravity, aerodynamic forces (wind), collisions with a ball and the floor.<br/>During this project, I also learned to implement a whole parallel computing technique using <a href="https://www.khronos.org/opencl">OpenCL</a>.</p>
+								</div>
+								<div class="col-lg-3 key-ideas">
+									<p><strong>Key Ideas</strong></p>
+									<ul>
+										<li>> 3D</li>
+										<li>> <a href="https://www.khronos.org/opencl">OpenCL</a></li>
+										<li>> <a href="https://www.khronos.org/opencl">OpenGL</a></li>
+										<li>> Spring-Damper</li>
+										<li>> Forces</li>
+										<li>> Shader</li>
+										<li>> Real-time</li>
+										<li>> Collisions</li>
+										<li>> Ui / <a href="http://qt-project.org/">Qt</a></li>
+									</ul>
+								</div>
+							</div>
+							<ul class="list-inline item-details">
+								<li>Context:
+									<strong>Student Project</strong>
+								</li>
+								<li>Date:
+									<strong>January - March 2014</strong>
+								</li>
+								<li>Sources:
+									<strong><a href="https://github.com/skanight/ClothSimulation">On Github</a></strong>
+								</li>
+							</ul>
+							<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+						</div>
+					</div>
+					<div class="close-modal" data-dismiss="modal">
+						<div class="lr">
+							<div class="rl">
+							</div>
+						</div>
+					</div>
+				</div>
             </div>
         </div>
     </div>
