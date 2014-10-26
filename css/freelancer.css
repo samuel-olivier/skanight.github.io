@@ -236,7 +236,8 @@ section.success {
 
 #portfolio .portfolio-item .infos p{
 	font-style: italic;
-	margin: 0;
+	margin: 7px 0;
+	line-height: 20px;
 }
 
 #portfolio .portfolio-item .portfolio-link {
