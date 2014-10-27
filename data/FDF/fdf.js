@@ -4,24 +4,34 @@ function drawLine(x1, x2, color) {
     g.context.lineWidth = 1;
 	g.context.strokeStyle = color;
 	g.context.beginPath();
-	g.context.moveTo(x1.x, x1.y);
-	g.context.lineTo(x2.x, x2.y);
+	g.context.moveTo(x1[0], x1[1]);
+	g.context.lineTo(x2[0], x2[1]);
 	g.context.stroke();
 }
 
 function drawRect(p, s, color) {
 	g.context.fillStyle = color;
-	g.context.fillRect(p.x, p.y, s.x, s.y);
+	g.context.fillRect(p[0], p[1], s[0], s[1]);
 }
 
-function rotate(c, angle, p) {
-	return p.clone().subtract(c).rotate(angle).add(c);
+function rotate(c, angle, pp) {
+	var mat = mat2.create();
+	mat2.rotate(mat, mat2.create(), angle);
+	
+	var p = vec2.clone(pp);
+	vec2.subtract(p, p, c);
+	vec2.transformMat2(p, p, mat);
+	vec2.add(p, p, c);
+	return p;
 }
 
 function project(x, y, z) {
-	var p = rotate(new Victor(g.map.width / 2, g.map.height / 2), g.display.rotation, new Victor(x, y));
+	var p = rotate(vec2.fromValues(g.map.width / 2, g.map.height / 2), g.display.rotation, vec2.fromValues(x, y)),
+		res = vec2.fromValues(g.conf.cte1 * p[0] - g.conf.cte2 * p[1], -z + g.conf.cte1 * 0.5 * p[0] + g.conf.cte2 * 0.5 * p[1]);
 	
-	return new Victor(g.conf.cte1 * p.x - g.conf.cte2 * p.y, -z + g.conf.cte1 * 0.5 * p.x + g.conf.cte2 * 0.5 * p.y).multiply(g.display.screenFactor).add(g.display.screenTranslation);
+	vec2.multiply(res, res, g.display.screenFactor);
+	vec2.add(res, res, g.display.screenTranslation);
+	return res;
 }
 
 function computeColor(z) {
@@ -36,26 +46,26 @@ function computeColor(z) {
 }
 
 function update() {
-	var currentTime = new Date().getTime(),
-		elapsed = (g.lastUpdate - currentTime) / 1000;
+		var currentTime = new Date().getTime(),
+			elapsed = (g.lastUpdate - currentTime) / 1000;
 
-	if (g.keys[37] == true) {
-		g.display.rotation += g.conf.angularSpeed * elapsed;
-	} else if (g.keys[39] == true) {
-		g.display.rotation -= g.conf.angularSpeed * elapsed;
-	}
+		if (g.keys[37] == true) {
+			g.display.rotation += g.conf.angularSpeed * elapsed;
+		} else if (g.keys[39] == true) {
+			g.display.rotation -= g.conf.angularSpeed * elapsed;
+		}
 
 	if (g.keys[38] == true) {
-		g.display.screenFactor.subtract(new Victor(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
+		vec2.subtract(g.display.screenFactor, g.display.screenFactor, vec2.fromValues(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
 	} else if (g.keys[40] == true) {
-		g.display.screenFactor.add(new Victor(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
+		vec2.add(g.display.screenFactor, g.display.screenFactor, vec2.fromValues(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
 	}
 	
 	if (g.display.selectedPoint != null) {
 		if (g.keys[107] == true) {
-			g.map.map[g.display.selectedPoint.y][g.display.selectedPoint.x] -= g.conf.pointSpeed * elapsed;
+			g.map.map[g.display.selectedPoint[1]][g.display.selectedPoint[0]] -= g.conf.pointSpeed * elapsed;
 		} else if (g.keys[109] == true) {
-			g.map.map[g.display.selectedPoint.y][g.display.selectedPoint.x] += g.conf.pointSpeed * elapsed;
+			g.map.map[g.display.selectedPoint[1]][g.display.selectedPoint[0]] += g.conf.pointSpeed * elapsed;
 		}
 	}
 	
@@ -69,10 +79,10 @@ function calcLine(x1, y1, x2, y2) {
 		p1 = project(x1, y1, z1),
 		p2 = project(x2, y2, z2);
 	
-	if (g.display.selectedPoint != null && (new Victor(x1, y1).distance(g.display.selectedPoint) == 0 || new Victor(x2, y2).distance(g.display.selectedPoint) == 0)) {
+	if (g.display.selectedPoint != null && (vec2.distance(vec2.fromValues(x1, y1), g.display.selectedPoint) == 0 || vec2.distance(vec2.fromValues(x2, y2), g.display.selectedPoint) == 0)) {
 		c = "#FFF";
 	} else {
-		c = g.context.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+		c = g.context.createLinearGradient(p1[0], p1[1], p2[0], p2[1]);
 		c.addColorStop(0, computeColor(z1));
 		c.addColorStop(1, computeColor(z2));
 	}
@@ -80,7 +90,7 @@ function calcLine(x1, y1, x2, y2) {
 }
 
 function draw() {
-	drawRect(new Victor(0, 0), new Victor(g.canvas.width(), g.canvas.height()), "#EDEDED");
+	drawRect(vec2.fromValues(0, 0), vec2.fromValues(g.canvas.width(), g.canvas.height()), "#EDEDED");
 	for (var y = 1; y < g.map.height; ++y) {
 		for (var x = 1; x < g.map.width; ++x) {
 			calcLine(x - 1, y - 1, x, y - 1);
@@ -136,8 +146,8 @@ $(function() {
 		},
 		keys: {},
 		display: {
-			screenFactor: new Victor(30, 30),
-			screenTranslation: new Victor(c.width() / 2, c.height() / 4),
+			screenFactor: vec2.fromValues(30, 30),
+			screenTranslation: vec2.fromValues(c.width() / 2, c.height() / 4),
 			rotation: 0,
 			selectedPoint: null
 		},
@@ -161,8 +171,8 @@ $(function() {
 			for (var x = 0; x < g.map.width; ++x) {
 				var p = project(x, y, g.map.map[y][x]);
 				
-				if (p.distance(new Victor(event.offsetX, event.offsetY)) < g.conf.maximumGrabDistance) {
-					g.display.selectedPoint = new Victor(x, y);
+				if (vec2.distance(p, vec2.fromValues(event.offsetX, event.offsetY)) < g.conf.maximumGrabDistance) {
+					g.display.selectedPoint = vec2.fromValues(x, y);
 					return ;
 				}
 			}
