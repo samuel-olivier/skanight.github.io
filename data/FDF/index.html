@@ -2,14 +2,41 @@
 <html>
 	<head>
 		<title>FDF</title>
-		
-		<script src="jquery-2.1.1.min.js"></script>
-		<script src="gl-matrix-min.js"></script>
-		<script src="fdf.js"></script>
+				
+		<link rel="stylesheet" type="text/css" href="../../font-awesome-4.1.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.4.min.css">
+		<link rel="stylesheet" type="text/css" href="css/fdf.css">
+
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.mobile-1.4.4.min.js"></script>
+		<script src="js/gl-matrix-min.js"></script>
+		<script src="js/fdf.js"></script>
+		<script src="js/camera.js"></script>
 	</head>
 	
 	<body>
-		<canvas id="canvas" width="800" height="450" style="border: solid 1px;"></canvas>	 
+		<div data-role="page" class="page">
+			<a class="panel-arrow" href="#panel">
+				<i class="fa fa-arrow-circle-right fa-4x"></i>
+			</a>
+			<div data-role="panel" id="panel" data-position="left" data-display="overlay" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+				<div class="ui-panel-inner">
+					<h3>FDF</h3>
+					<h4>Description</h4>
+					<p>The FDF is a representation of a 3D grid where the 3D is handled using a simple isometric projection from 3D to 2D in order to draw it on a HTML5 2D Canvas.</p>
+					<h4>How to use?</h4>
+					<p></p>
+					<a href="#" data-rel="close" data-role="button" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-icon-left ui-btn-up-a">
+						<span class="ui-btn-inner">
+							<span class="ui-btn-text">Close panel</span>
+							<span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span>
+						</span>
+					</a>
+				</div>
+			</div>
+			<canvas id="canvas"></canvas>
+		</div>
 	</body>
 </html>
-		

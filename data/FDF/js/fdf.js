@@ -26,11 +26,15 @@ function rotate(c, angle, pp) {
 }
 
 function project(x, y, z) {
-	var p = rotate(vec2.fromValues(g.map.width / 2, g.map.height / 2), g.display.rotation, vec2.fromValues(x, y)),
-		res = vec2.fromValues(g.conf.cte1 * p[0] - g.conf.cte2 * p[1], -z + g.conf.cte1 * 0.5 * p[0] + g.conf.cte2 * 0.5 * p[1]);
+	var res = g.display.camera.project(vec3.fromValues(x, y, z));
+	// var p = vec3.fromValues(x, y, z);
+	// g.display.camera.project(p);
+	// var res = vec2.fromValues(g.conf.cte1 * p[0] - g.conf.cte2 * p[1], -p[2] + g.conf.cte1 * 0.5 * p[0] + g.conf.cte2 * 0.5 * p[1]);
+	// var p = rotate(vec2.fromValues(g.map.width / 2, g.map.height / 2), g.display.rotation, vec2.fromValues(p3D[0], p3D[1])),
+		// res = vec2.fromValues(g.conf.cte1 * p[0] - g.conf.cte2 * p[1], -p3D[2] + g.conf.cte1 * 0.5 * p[0] + g.conf.cte2 * 0.5 * p[1]);
 	
-	vec2.multiply(res, res, g.display.screenFactor);
-	vec2.add(res, res, g.display.screenTranslation);
+	// vec2.multiply(res, res, g.display.screenFactor);
+	// vec2.add(res, res, g.display.screenTranslation);
 	return res;
 }
 
@@ -46,14 +50,14 @@ function computeColor(z) {
 }
 
 function update() {
-		var currentTime = new Date().getTime(),
-			elapsed = (g.lastUpdate - currentTime) / 1000;
+	var currentTime = new Date().getTime(),
+		elapsed = (g.lastUpdate - currentTime) / 1000;
 
-		if (g.keys[37] == true) {
-			g.display.rotation += g.conf.angularSpeed * elapsed;
-		} else if (g.keys[39] == true) {
-			g.display.rotation -= g.conf.angularSpeed * elapsed;
-		}
+	if (g.keys[37] == true) {
+		g.display.rotation += g.conf.angularSpeed * elapsed;
+	} else if (g.keys[39] == true) {
+		g.display.rotation -= g.conf.angularSpeed * elapsed;
+	}
 
 	if (g.keys[38] == true) {
 		vec2.subtract(g.display.screenFactor, g.display.screenFactor, vec2.fromValues(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
@@ -68,7 +72,7 @@ function update() {
 			g.map.map[g.display.selectedPoint[1]][g.display.selectedPoint[0]] += g.conf.pointSpeed * elapsed;
 		}
 	}
-	
+	g.display.camera.update();
 	g.lastUpdate = currentTime;
 }
 
@@ -107,6 +111,12 @@ function draw() {
 
 $(function() {
 	var c = $("#canvas");
+	function resetSize() {
+		c[0].width = c.width();
+		c[0].height = c.height();
+	}
+	resetSize();
+
 	g = {
 		canvas: c,
 		context: c[0].getContext("2d"),
@@ -149,7 +159,8 @@ $(function() {
 			screenFactor: vec2.fromValues(30, 30),
 			screenTranslation: vec2.fromValues(c.width() / 2, c.height() / 4),
 			rotation: 0,
-			selectedPoint: null
+			selectedPoint: null,
+			camera: new Camera(vec3.fromValues(10, 10, 0), 0.785398163, c.width() / c.height())
 		},
 		lastUpdate: new Date().getTime()
 	};
@@ -179,5 +190,9 @@ $(function() {
 		}
 		g.display.selectedPoint = null;
 	});
+	$(document).mousemove(function(e) {
 	
+	});
+	
+	c.resize(resetSize);
 });
