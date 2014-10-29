@@ -1,5 +1,9 @@
 var g = {};
 
+function clamp(val, min, max) {
+	return Math.min(max, Math.max(min, val));
+}
+
 function drawLine(x1, x2, color) {
     g.context.lineWidth = 1;
 	g.context.strokeStyle = color;
@@ -27,14 +31,8 @@ function rotate(c, angle, pp) {
 
 function project(x, y, z) {
 	var res = g.display.camera.project(vec3.fromValues(x, y, z));
-	// var p = vec3.fromValues(x, y, z);
-	// g.display.camera.project(p);
-	// var res = vec2.fromValues(g.conf.cte1 * p[0] - g.conf.cte2 * p[1], -p[2] + g.conf.cte1 * 0.5 * p[0] + g.conf.cte2 * 0.5 * p[1]);
-	// var p = rotate(vec2.fromValues(g.map.width / 2, g.map.height / 2), g.display.rotation, vec2.fromValues(p3D[0], p3D[1])),
-		// res = vec2.fromValues(g.conf.cte1 * p[0] - g.conf.cte2 * p[1], -p3D[2] + g.conf.cte1 * 0.5 * p[0] + g.conf.cte2 * 0.5 * p[1]);
-	
-	// vec2.multiply(res, res, g.display.screenFactor);
-	// vec2.add(res, res, g.display.screenTranslation);
+	vec2.add(res, res, vec2.fromValues(0.5, 0.5));
+	vec2.multiply(res, res, vec2.fromValues(g.display.screen[0], g.display.screen[1]));
 	return res;
 }
 
@@ -54,15 +52,15 @@ function update() {
 		elapsed = (g.lastUpdate - currentTime) / 1000;
 
 	if (g.keys[37] == true) {
-		g.display.rotation += g.conf.angularSpeed * elapsed;
+		g.display.camera.changeYAngle(-g.conf.angularSpeed * elapsed);
 	} else if (g.keys[39] == true) {
-		g.display.rotation -= g.conf.angularSpeed * elapsed;
+		g.display.camera.changeYAngle(g.conf.angularSpeed * elapsed);
 	}
 
 	if (g.keys[38] == true) {
-		vec2.subtract(g.display.screenFactor, g.display.screenFactor, vec2.fromValues(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
+		g.display.camera.changeXAngle(g.conf.angularSpeed * elapsed);
 	} else if (g.keys[40] == true) {
-		vec2.add(g.display.screenFactor, g.display.screenFactor, vec2.fromValues(g.conf.zoomSpeed * elapsed, g.conf.zoomSpeed * elapsed));
+		g.display.camera.changeXAngle(-g.conf.angularSpeed * elapsed);
 	}
 	
 	if (g.display.selectedPoint != null) {
@@ -76,19 +74,19 @@ function update() {
 	g.lastUpdate = currentTime;
 }
 
-function calcLine(x1, y1, x2, y2) {
+function calcLine(x1, z1, x2, z2) {
 	var c = "#59AEB7",
-		z1 = g.map.map[y1][x1],
-		z2 = g.map.map[y2][x2],
+		y1 = g.map.map[z1][x1],
+		y2 = g.map.map[z2][x2],
 		p1 = project(x1, y1, z1),
 		p2 = project(x2, y2, z2);
 	
-	if (g.display.selectedPoint != null && (vec2.distance(vec2.fromValues(x1, y1), g.display.selectedPoint) == 0 || vec2.distance(vec2.fromValues(x2, y2), g.display.selectedPoint) == 0)) {
+	if (g.display.selectedPoint != null && (vec2.distance(vec2.fromValues(x1, z1), g.display.selectedPoint) == 0 || vec2.distance(vec2.fromValues(x2, z2), g.display.selectedPoint) == 0)) {
 		c = "#FFF";
 	} else {
 		c = g.context.createLinearGradient(p1[0], p1[1], p2[0], p2[1]);
-		c.addColorStop(0, computeColor(z1));
-		c.addColorStop(1, computeColor(z2));
+		c.addColorStop(0, computeColor(y1));
+		c.addColorStop(1, computeColor(y2));
 	}
 	drawLine(p1, p2, c);
 }
@@ -114,8 +112,10 @@ $(function() {
 	function resetSize() {
 		c[0].width = c.width();
 		c[0].height = c.height();
+		g.display.camera.changeProperties(vec3.fromValues(g.map.width / 2, 0, g.map.height / 2), 0.785398163, c.width() / c.height());
+		g.display.screen[0] = c[0].width;
+		g.display.screen[1] = c[0].height;
 	}
-	resetSize();
 
 	g = {
 		canvas: c,
@@ -156,11 +156,9 @@ $(function() {
 		},
 		keys: {},
 		display: {
-			screenFactor: vec2.fromValues(30, 30),
-			screenTranslation: vec2.fromValues(c.width() / 2, c.height() / 4),
-			rotation: 0,
 			selectedPoint: null,
-			camera: new Camera(vec3.fromValues(10, 10, 0), 0.785398163, c.width() / c.height())
+			camera: new Camera(),
+			screen: vec2.fromValues(800, 450)
 		},
 		lastUpdate: new Date().getTime()
 	};
@@ -180,7 +178,7 @@ $(function() {
 	g.canvas.mouseup(function(event) {
 		for (var y = 0; y < g.map.height; ++y) {
 			for (var x = 0; x < g.map.width; ++x) {
-				var p = project(x, y, g.map.map[y][x]);
+				var p = project(x, g.map.map[y][x], y);
 				
 				if (vec2.distance(p, vec2.fromValues(event.offsetX, event.offsetY)) < g.conf.maximumGrabDistance) {
 					g.display.selectedPoint = vec2.fromValues(x, y);
@@ -190,9 +188,7 @@ $(function() {
 		}
 		g.display.selectedPoint = null;
 	});
-	$(document).mousemove(function(e) {
 	
-	});
-	
+	resetSize();
 	c.resize(resetSize);
 });
