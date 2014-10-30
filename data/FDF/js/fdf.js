@@ -124,9 +124,9 @@ $(function() {
 	function resetSize() {
 		c[0].width = c.width();
 		c[0].height = c.height();
-		g.display.camera.changeProperties(g.map.center, 0.785398163, c.width() / c.height());
 		g.display.screen[0] = c[0].width;
 		g.display.screen[1] = c[0].height;
+		g.display.camera.changeProperties(g.map.center, 0.785398163, g.display.screen[0] / g.display.screen[1]);
 	}
 
 	g = {
@@ -174,9 +174,72 @@ $(function() {
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			]);
+			g.display.camera.angle[0] = -0.95;
+			g.display.camera.angle[1] = 4.03;
+			g.display.camera.distance = 43;
 		},
 		2: function() {
-			g.map.initializefromHeightMap([])
+			var map = [];
+			for (var y = 0; y < 15; y++) {
+				var line = [];
+				for (var x = 0; x < 40; x++) {
+					line.push(Math.sin((x + y) / 2) * 2);
+				}
+				map.push(line);
+			}
+			g.map.initializefromHeightMap(map)
+			g.display.camera.angle[0] = -0.58;
+			g.display.camera.angle[1] = 2.34;
+			g.display.camera.distance = 67;
+		},
+		3: function() {
+			var thetaNumber = 10,
+				alphaNumber = 20,
+				vertexes = [],
+				lines = [];
+			
+			vertexes.push(vec3.fromValues(0, 1, 0));
+			vertexes.push(vec3.fromValues(0, -1, 0));
+			for (var y = 1; y < thetaNumber; ++y) {
+				var theta = Math.PI / 2 - y * Math.PI / thetaNumber,
+					p = vec2.fromValues(Math.cos(theta), Math.sin(theta)),
+					up = vec2.fromValues(0, 1),
+					proj = vec2.create();
+				
+				vec2.scale(proj, up, vec2.dot(p, up));
+				var r = vec2.distance(proj, p);
+				for (var x = 0; x < alphaNumber; ++x) {
+					var alpha = 2 * x * Math.PI / alphaNumber;
+					
+					vertexes.push(vec3.fromValues(Math.cos(alpha) * r, p[1], Math.sin(alpha) * r));
+					if (y == 1) {
+						lines.push({
+							v1: 0,
+							v2: 2 + (y - 1) * alphaNumber + x
+						});
+					}
+					var nextHorIdx = 2 + (y - 1) * alphaNumber + x + 1,
+						nextVerIdx = 2 + y * alphaNumber + x;
+					if (x == alphaNumber - 1) {
+						nextHorIdx = 2 + (y - 1) * alphaNumber;
+					}
+					if (y == thetaNumber - 1) {
+						nextVerIdx = 1;
+					}
+					lines.push({
+						v1: 2 + (y - 1) * alphaNumber + x,
+						v2: nextHorIdx,
+					});
+					lines.push({
+						v1: 2 + (y - 1) * alphaNumber + x,
+						v2: nextVerIdx
+					});
+				}
+			}
+			g.map.setMap(vertexes, lines, vec3.fromValues(0, 0, 0));
+			g.display.camera.angle[0] = -0.38;
+			g.display.camera.angle[1] = 2.5;
+			g.display.camera.distance = 10;
 		}
 	};
 	
@@ -184,6 +247,7 @@ $(function() {
 		var current = g.scenes[$("#selectScene option:selected").attr('id')];
 		if (typeof(current) !== 'undefined') {
 			current();
+			g.display.camera.changeProperties(g.map.center, 0.785398163, g.display.screen[0] / g.display.screen[1]);
 		}
 	})
   .change();

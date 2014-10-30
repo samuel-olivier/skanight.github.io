@@ -42,6 +42,11 @@ function Map() {
 				}
 			}
 		}
-		
 	};
+	
+	this.setMap = function(v, l, c) {
+		this.vertexes = v.slice(0);
+		this.lines = l.slice(0);
+		this.center = vec3.clone(c);
+	}
 }
