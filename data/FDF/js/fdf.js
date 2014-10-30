@@ -72,10 +72,20 @@ function update() {
 	} 
 	
 	if (g.display.selectedPoint != null) {
-		if (g.keys[107] === true) {
-			g.map.map[g.display.selectedPoint[1]][g.display.selectedPoint[0]] -= g.conf.pointSpeed * elapsed;
-		} else if (g.keys[109] === true) {
-			g.map.map[g.display.selectedPoint[1]][g.display.selectedPoint[0]] += g.conf.pointSpeed * elapsed;
+		if (g.keys[87] === true) {
+			g.map.vertexes[g.display.selectedPoint][1] -= g.conf.pointSpeed * elapsed;
+		} else if (g.keys[83] === true) {
+			g.map.vertexes[g.display.selectedPoint][1] += g.conf.pointSpeed * elapsed;
+		}
+		if (g.keys[65] === true) {
+			g.map.vertexes[g.display.selectedPoint][0] -= g.conf.pointSpeed * elapsed;
+		} else if (g.keys[68] === true) {
+			g.map.vertexes[g.display.selectedPoint][0] += g.conf.pointSpeed * elapsed;
+		}
+		if (g.keys[81] === true) {
+			g.map.vertexes[g.display.selectedPoint][2] -= g.conf.pointSpeed * elapsed;
+		} else if (g.keys[69] === true) {
+			g.map.vertexes[g.display.selectedPoint][2] += g.conf.pointSpeed * elapsed;
 		}
 	}
 	g.display.camera.update();
@@ -88,7 +98,7 @@ function calcLine(v1, v2, selected) {
 		p2 = project(v2);
 	
 	if (selected) {
-		c = "#FFF";
+		c = "#F00";
 	} else {
 		c = g.context.createLinearGradient(p1[0], p1[1], p2[0], p2[1]);
 		c.addColorStop(0, computeColor(v1[1]));
@@ -140,7 +150,9 @@ $(function() {
 		lastUpdate: new Date().getTime()
 	};
 
-	g.map.initializefromHeightMap( [
+	g.scenes = {
+		1: function() {
+			g.map.initializefromHeightMap([
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -162,6 +174,20 @@ $(function() {
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			]);
+		},
+		2: function() {
+			g.map.initializefromHeightMap([])
+		}
+	};
+	
+	$("#selectScene").change(function() {
+		var current = g.scenes[$("#selectScene option:selected").attr('id')];
+		if (typeof(current) !== 'undefined') {
+			current();
+		}
+	})
+  .change();
+  
 	setInterval(function() {
 		update();
 		draw();

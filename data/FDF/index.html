@@ -34,9 +34,22 @@
 				<div class="ui-panel-inner">
 					<h3>FDF</h3>
 					<h4>Description</h4>
-					<p>The FDF is a representation of a 3D grid where the 3D is handled using a simple isometric projection from 3D to 2D in order to draw it on a HTML5 2D Canvas.</p>
+					<p>The FDF is a representation of a 3D grid where the 3D is handled using a simple perspective projection from 3D to 2D in order to draw it on a HTML5 2D Canvas.</p>
 					<h4>How to use?</h4>
-					<p></p>
+					<ul>
+						<li>Move : <i class="fa fa-arrow-up"></i>, <i class="fa fa-arrow-down"></i>, <i class="fa fa-arrow-left"></i>, <i class="fa fa-arrow-right"></i></li>
+						<li>Zoom : <strong>Ctrl</strong> + <i class="fa fa-arrow-up"></i>/<i class="fa fa-arrow-down"></i></li>
+						<li>Select a vertex : <strong>Mouse</strong></li>
+						<li>Move a vertex : <strong>a, d, w, s, q, e</strong></li>
+					</ul>
+					<h4>Scenes :</h4>
+					<div class="form-group">
+						<select type="select" class="" id="selectScene">
+							<option id="1" selected>Height Map</option>
+							<option id="2">Simple Object</option>
+						</select>
+					</div>
+					<hr>
 					<a href="#" data-rel="close" data-role="button" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-icon-left ui-btn-up-a">
 						<span class="ui-btn-inner">
 							<span class="ui-btn-text">Close panel</span>
