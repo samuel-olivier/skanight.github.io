@@ -466,6 +466,15 @@ footer .footer-below {
 	text-align: left;
 }
 
+.portfolio-modal .modal-content .container .modal-column .additional-infos {
+    margin: 30px;
+}
+
+.portfolio-modal .modal-content .container .modal-column .additional-infos i {
+    margin-right: 4px;
+    margin-left: 2px;
+}
+
 .portfolio-modal .modal-content h2 {
     margin: 0;
     font-size: 3em;
