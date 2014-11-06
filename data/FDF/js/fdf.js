@@ -298,8 +298,8 @@ $(function() {
 			g.display.lastPoint = vec2.clone(g.display.startPoint);
 		}
 		if (g.display.isDragging == true) {
-			g.display.camera.changeYAngle((currentPoint[0] - g.display.lastPoint[0]) / 100);
-			g.display.camera.changeXAngle(-(currentPoint[1] - g.display.lastPoint[1]) / 100);
+			g.display.camera.changeYAngle((currentPoint[0] - g.display.lastPoint[0]) / 300);
+			g.display.camera.changeXAngle(-(currentPoint[1] - g.display.lastPoint[1]) / 300);
 			g.display.lastPoint = currentPoint;
 		}
 	});
