@@ -49,4 +49,13 @@ function Map() {
 		this.lines = l.slice(0);
 		this.center = vec3.clone(c);
 	}
+	
+	this.initializefromOBJ = function (url) {
+		function loaded(data) {
+			var m = K3D.parse.fromOBJ(data);	// done !
+			console.log(m);
+		}
+	
+		K3D.load(url, loaded);
+	}
 }

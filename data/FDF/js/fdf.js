@@ -191,7 +191,7 @@ $(function() {
 				}
 				map.push(line);
 			}
-			g.map.initializefromHeightMap(map)
+			g.map.initializefromHeightMap(map);
 			g.display.camera.angle[0] = -0.58;
 			g.display.camera.angle[1] = 2.34;
 			g.display.camera.distance = 67;
@@ -244,7 +244,14 @@ $(function() {
 			g.display.camera.angle[0] = -0.38;
 			g.display.camera.angle[1] = 2.5;
 			g.display.camera.distance = 10;
-		}
+		},
+		4: function() {
+			g.map.initializefromOBJ("raptor.obj");
+			g.display.camera.angle[0] = -0.58;
+			g.display.camera.angle[1] = 2.34;
+			g.display.camera.distance = 67;
+		},
+
 	};
 	
 	$("#selectScene")
