@@ -24,7 +24,6 @@ function Camera() {
 		vec3.add(eyePos, direction, this.target);
 		mat4.lookAt(this.eye, eyePos, this.target, realUp);
 		mat4.multiply(this.mtxCache, this.projection, this.eye);
-		console.log(this.angle, this.distance);
 	};
 	
 	this.project = function (p) {

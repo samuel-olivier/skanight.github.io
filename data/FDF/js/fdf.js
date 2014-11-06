@@ -138,6 +138,7 @@ $(function() {
 			angularSpeed: 0.6,
 			zoomSpeed: 10,
 			maximumGrabDistance: 5,
+			minimumDragDistance: 2,
 			pointSpeed: 1
 		},
 		map: new Map(),
@@ -145,7 +146,10 @@ $(function() {
 		display: {
 			selectedPoint: null,
 			camera: new Camera(),
-			screen: vec2.fromValues(800, 450)
+			screen: vec2.fromValues(800, 450),
+			startPoint: null,
+			lastPoint: null,
+			isDragging: false
 		},
 		lastUpdate: new Date().getTime()
 	};
@@ -243,14 +247,16 @@ $(function() {
 		}
 	};
 	
-	$("#selectScene").change(function() {
+	$("#selectScene")
+	.change(function() {
 		var current = g.scenes[$("#selectScene option:selected").attr('id')];
 		if (typeof(current) !== 'undefined') {
 			current();
 			g.display.camera.changeProperties(g.map.center, 0.785398163, g.display.screen[0] / g.display.screen[1]);
+			g.display.selectedPoint = null;
 		}
 	})
-  .change();
+	.change();
   
 	setInterval(function() {
 		update();
@@ -264,16 +270,38 @@ $(function() {
 	.keyup(function(event) {
 		g.keys[event.keyCode] = false;
 	});
-	g.canvas.mouseup(function(event) {
-		for (var i = 0; i < g.map.vertexes.length; ++i) {
-			var p = project(g.map.vertexes[i]);
-				
-			if (vec2.distance(p, vec2.fromValues(event.offsetX, event.offsetY)) < g.conf.maximumGrabDistance) {
-				g.display.selectedPoint = i;
-				return ;
+	g.canvas
+	.mouseup(function(event) {
+		g.display.startPoint = null;
+		g.display.lastPoint = null;
+		if (g.display.isDragging == false) {
+			g.display.isDragging = false;
+			for (var i = 0; i < g.map.vertexes.length; ++i) {
+				var p = project(g.map.vertexes[i]);
+					
+				if (vec2.distance(p, vec2.fromValues(event.offsetX, event.offsetY)) < g.conf.maximumGrabDistance) {
+					g.display.selectedPoint = i;
+					return ;
+				}
 			}
+			g.display.selectedPoint = null;
 		}
-		g.display.selectedPoint = null;
+		g.display.isDragging = false;
+	})
+	.mousedown(function(event) {
+		g.display.startPoint = vec2.fromValues(event.offsetX, event.offsetY);
+	})
+	.mousemove(function (event) {
+		var currentPoint = vec2.fromValues(event.offsetX, event.offsetY);
+		if (g.display.lastPoint == null && g.display.startPoint != null && vec2.distance(currentPoint, g.display.startPoint) >= g.conf.minimumDragDistance) {
+			g.display.isDragging = true;
+			g.display.lastPoint = vec2.clone(g.display.startPoint);
+		}
+		if (g.display.isDragging == true) {
+			g.display.camera.changeYAngle((currentPoint[0] - g.display.lastPoint[0]) / 100);
+			g.display.camera.changeXAngle(-(currentPoint[1] - g.display.lastPoint[1]) / 100);
+			g.display.lastPoint = currentPoint;
+		}
 	});
 	
 	resetSize();
