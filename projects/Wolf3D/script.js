@@ -2,6 +2,7 @@ var g = {};
 
 function drawLine(x1, y1, x2, y2, color) {
 	g.context.strokeStyle = color;
+	g.context.fillStyle = color;
 	g.context.beginPath();
 	g.context.moveTo(x1, y1);
 	g.context.lineTo(x2, y2);
@@ -16,6 +17,10 @@ function drawPixel(x, y, color) {
 function drawRect(x, y, width, height, color) {
 	g.context.fillStyle = color;
 	g.context.fillRect(x, y, width, height);
+}
+
+function drawPixel(x, y, color) {
+	drawRect(x, y, 1, 1, color)
 }
 
 function drawBackground() {
@@ -138,7 +143,11 @@ function drawWalls() {
 			} else {
 				color = "#A9260F";
 			}
-			drawLine(x, cHeight / 2 - halfHeight, x, cHeight / 2 + halfHeight, color);
+			// drawRect(x, cHeight / 2 - halfHeight, 1, 2 * halfHeight, color);
+			// drawLine(x, cHeight / 2 - halfHeight, x, cHeight / 2 + halfHeight, color);
+			// for (var y = cHeight / 2 - halfHeight; y < cHeight / 2 + halfHeight; ++y) {
+			// 	drawPixel(x, y, color);
+			// }
 		}
 	}
 }

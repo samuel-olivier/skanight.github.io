@@ -1,0 +1,85 @@
+{
+	"en": {
+		"TITLE_JOB": "Software Engineer",	
+
+		"HEADER_PORTFOLIO": "Portfolio",
+		"HEADER_TOGGLE_NAV": "Toggle navigation",
+		"HEADER_ABOUT_ME": "About Me",
+
+		"INTRO_SKILLS": "Software Development - Computer Graphics - New technologies",
+
+		"PORTFOLIO_TITLE": "Portfolio",
+		"PORTFOLIO_NAOCAR_DESCRIPTION": "A robot drives autonomously",
+		"PORTFOLIO_LIFETRACER_DESCRIPTION": "A physically based renderer",
+		"PORTFOLIO_CLOTHER_DESCRIPTION": "A standard cloth simulation",
+		"PORTFOLIO_ANIMATE_DESCRIPTION": "A keyframe animation software",
+		"PORTFOLIO_SHACE_DESCRIPTION": "The solution for photo sharing",
+		"PORTFOLIO_MORE_DESCRIPTION": "Other projects and experiments!",
+
+
+		"ABOUT_ME_TITLE": "About Me",
+		"ABOUT_ME_BEFORE_EPITECH": "Mainly interested in everything close to the software development, I started to learn programming when I was 14 by developing some small projects in C, Pascal, and Flowcode.",
+		"ABOUT_ME_EPITECH": "Later, I studied at Epitech, for a Master of Information Technology where I learned deeply how to program, to work with a team and to be professional.",
+		"ABOUT_ME_SAN_DIEGO": "During my fourth year, I spent 2 quarters at UCSD (University of California, San Diego) where I developed my skills in computer graphics (animation and rendering) and algorithms.",
+		"ABOUT_ME_NOWADAYS": "Now, I'm a computer graphics enthusiast, and I love everything with physical and/or a graphical rendering and interactions (3D, 2D, robotics etc.).",
+		"ABOUT_ME_RESUME_LINK": "data/resume-en.pdf",
+		"ABOUT_ME_RESUME": "Resume",
+
+		"FOOTER_LOCATION_TITLE": "Location",
+		"FOOTER_LOCATION_CITY": "Montpellier",
+		"FOOTER_LOCATION_COUNTRY": "France",
+		"FOOTER_WEB_LINKS_TITLE": "Around the Web",
+		"FOOTER_WEB_LINKS_LINKED_IN": "https://www.linkedin.com/in/samuelolivier/en",
+		"FOOTER_WHAT_ELSE_TITLE": "What else?",
+		"FOOTER_WHAT_ELSE_CONTENT": "Aside from the Computer Sciences domain, I also love playing music and doing some sport such as skiing and slackline.",
+
+		"PROJETCS_KEY_IDEAS": "Key Ideas",
+		"PROJETCS_CLOSE": "Close",
+		"PROJECTS_JUST_ME": "Just Me",
+		
+		"PROJECTS_NAOCAR_DESCRIPTION": "NaoCar is a project whose goal is to make the humanoid robot \"Nao\" drive a child car autonomously. In addition to the very interesting technical part, NaoCar had some success in the world of robotics especially through presentations at various public shows.",
+		"PROJECTS_NAOCAR_KEY_IDEA_AUTONOMOUS": "Autonomous",
+		"PROJECTS_NAOCAR_PEOPLE": "4 people",
+		"PROJECTS_NAOCAR_DATE": "September 2012 - April 2013",
+
+		"PROJECTS_LIFETRACER_DESCRIPTION": "I developed this Physically Based Renderer for the CSE 168 class at UCSD (University of California, San Diego) during the Spring 2014 quarter. I learned and used a lot of concepts such as simple pathtracing, photon-mapping, BRDFs etc. Here is my ",
+		"PROJECTS_LIFETRACER_DESCRIPTION_LINK": "final project page",
+		"PROJECTS_LIFETRACER_KEY_IDEA_TEXTURE_MAPPING": "Texture Mapping",
+		"PROJECTS_LIFETRACER_DATE": "April - June 2014",
+
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_1": "I developed this Cloth Simulation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. I simulate the cloth using the spring damper technique and I compute the gravity, aerodynamic forces (wind), collisions with a ball and the floor. During this project, I also learned to implement a whole parallel computing system using ",
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_2": ". For the renderer, I used OpenGL based on my own vertex and fragment shaders.",
+		"PROJECTS_CLOTHER_KEY_IDEA_REAL_TIME": "Real-time",
+		"PROJECTS_CLOTHER_KEY_IDEA_COLLISIONS": "Collisions",
+		"PROJECTS_CLOTHER_DATE": "March 2014",
+
+		"PROJECTS_ANIMATE_DESCRIPTION_PART_1": "I developed this Key frame Animation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. The Animation Editor handles several interpolation and extrapolation types (smooth, linear, constant interpolation etc.). Moreover, I use a skeleton to apply the animation, I add the skinning on it in order to have a better visual and I finally render it using ",
+		"PROJECTS_ANIMATE_DESCRIPTION_PART_2": " with my own vertex and fragment shaders.",
+		"PROJECTS_ANIMATE_KEY_IDEA_ANIMATION": "Animation",
+		"PROJECTS_ANIMATE_KEY_IDEA_KEY_FRAME": "Key Frame",
+		"PROJECTS_ANIMATE_KEY_IDEA_SKELETON": "Skeleton",
+		"PROJECTS_ANIMATE_KEY_IDEA_SKINNING": "Skinning",
+		"PROJECTS_ANIMATE_KEY_IDEA_REAL_TIME": "Real-time",
+		"PROJECTS_ANIMATE_DATE": "January - February 2014",
+
+		"PROJECTS_SHACE_DESCRIPTION_PART_1": "Shace is a project I work on with 5 other persons to build an answer for a question we often ask during and after an event (with family, friends etc.) : \"How do we do for the pictures?\". Shace is ",
+		"PROJECTS_SHACE_DESCRIPTION_PART_2": "a RESTful API",
+		"PROJECTS_SHACE_DESCRIPTION_PART_3": "a website",
+		"PROJECTS_SHACE_DESCRIPTION_PART_4": ", mobile applications and coming soon, a Desktop version.",
+		"PROJECTS_SHACE_KEY_IDEA_RESTFUL_API": "RESTful API",
+		"PROJECTS_SHACE_PEOPLE": "6 people",
+		"PROJECTS_SHACE_DATE": "December 2012 - Today",
+
+		"PROJECTS_MORE_TITLE": "More projects",
+
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_1": "The Wolf3D is tribute to the ",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_WOLF_LINK": "Wolfenstein 3D",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_2": "a simple First Person game where the 3D is handled using the ",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_RAYCASTING_LINK": "raycasting method",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_3": "I only used a HTML5 2D Canvas for the game screen.",
+
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_1": "The FDF is a representation of a 3D grid where the 3D is handled using a simple ",
+		"PROJECTS_MORE_FDF_DESCRIPTION_PROJECTION_LINK": "perspective projection",
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": " from 3D to 2D in order to draw it on a HTML5 2D Canvas.",
+	}
+}
