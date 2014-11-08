@@ -37,7 +37,9 @@ function project(v) {
 }
 
 function computeColor(z) {
-	if (z < 0) {
+	if (g.display.gradientColor == false) {
+		return "#000080";
+	} else if (z < 0) {
 		return "#000080";
 	} else if (z < 3) {
 		return "#ACE359";
@@ -149,13 +151,14 @@ $(function() {
 			screen: vec2.fromValues(800, 450),
 			startPoint: null,
 			lastPoint: null,
-			isDragging: false
+			isDragging: false,
+			gradientColor: true
 		},
 		lastUpdate: new Date().getTime()
 	};
 
 	g.scenes = {
-		1: function() {
+		1: function(afterLoad) {
 			g.map.initializefromHeightMap([
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -181,8 +184,10 @@ $(function() {
 			g.display.camera.angle[0] = -0.95;
 			g.display.camera.angle[1] = 4.03;
 			g.display.camera.distance = 43;
+			g.display.gradientColor = true;
+			afterLoad();
 		},
-		2: function() {
+		2: function(afterLoad) {
 			var map = [];
 			for (var y = 0; y < 15; y++) {
 				var line = [];
@@ -195,8 +200,10 @@ $(function() {
 			g.display.camera.angle[0] = -0.58;
 			g.display.camera.angle[1] = 2.34;
 			g.display.camera.distance = 67;
+			g.display.gradientColor = true;
+			afterLoad();
 		},
-		3: function() {
+		3: function(afterLoad) {
 			var thetaNumber = 10,
 				alphaNumber = 20,
 				vertexes = [],
@@ -244,12 +251,18 @@ $(function() {
 			g.display.camera.angle[0] = -0.38;
 			g.display.camera.angle[1] = 2.5;
 			g.display.camera.distance = 10;
+			g.display.gradientColor = true;
+			afterLoad();
 		},
-		4: function() {
-			g.map.initializefromOBJ("raptor.obj");
-			g.display.camera.angle[0] = -0.58;
-			g.display.camera.angle[1] = 2.34;
-			g.display.camera.distance = 67;
+		4: function(afterLoad) {
+			function afterLoadFunc() {
+				g.display.camera.angle[0] = -0.58;
+				g.display.camera.angle[1] = 2.34;
+				g.display.camera.distance = 300;
+				g.display.gradientColor = false;
+				afterLoad();
+			}
+			g.map.initializefromOBJ("raptor.obj", afterLoadFunc);
 		},
 
 	};
@@ -258,9 +271,11 @@ $(function() {
 	.change(function() {
 		var current = g.scenes[$("#selectScene option:selected").attr('id')];
 		if (typeof(current) !== 'undefined') {
-			current();
-			g.display.camera.changeProperties(g.map.center, 0.785398163, g.display.screen[0] / g.display.screen[1]);
-			g.display.selectedPoint = null;
+			function afterLoad() {
+				g.display.camera.changeProperties(g.map.center, 0.785398163, g.display.screen[0] / g.display.screen[1]);
+				g.display.selectedPoint = null;
+			}
+			current(afterLoad);
 		}
 	})
 	.change();
