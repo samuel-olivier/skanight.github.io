@@ -8,13 +8,14 @@
 		<meta name="description" content="My portfolio">
 		<meta name="author" content="Samuel Olivier">
 
-		<title>Samuel Olivier - Software Engineer</title>
+		<title data-traduction="TITLE">Samuel Olivier</title>
 
 		<!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- Custom CSS -->
 		<link href="css/freelancer.css" rel="stylesheet">
+		<link href="css/page.css" rel="stylesheet">
 
 		<!-- Custom Fonts -->
 		<link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -33,12 +34,12 @@
 	<body id="page-top" class="index">
 
 		<!-- Navigation -->
-		<nav class="navbar navbar-default navbar-fixed-top">
+		<nav class="navbar navbar-default navbar-fixed-top hide-on-load">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header page-scroll">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
+						<span class="sr-only" data-traduction>{HEADER_TOGGLE_NAV}</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -53,10 +54,14 @@
 							<a href="#page-top"></a>
 						</li>
 						<li class="page-scroll">
-							<a href="#portfolio">Portfolio</a>
+							<a href="#portfolio" data-traduction>{HEADER_PORTFOLIO}</a>
 						</li>
 						<li class="page-scroll">
-							<a href="#about">About Me</a>
+							<a href="#about" data-traduction>{HEADER_ABOUT_ME}</a>
+						</li>
+						<li class="page-scroll">
+							<a href="#" class="language-selector language-en pull-left" data-language="en"><img src="img/english.png" style="margin-top: -5px;"/></a>
+							<a href="#" class="language-selector language-fr pull-left" data-language="fr"><img src="img/french.png" style="margin-top: -5px;"/></a>
 						</li>
 					</ul>
 				</div>
@@ -66,14 +71,14 @@
 		</nav>
 
 		<!-- Header -->
-		<header>
+		<header class="hide-on-load">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="intro-text">
 							<span class="name">Samuel OLIVIER</span>
 							<hr class="star-light">
-							<span class="skills">Software Development - Computer Graphics - New technologies</span>
+							<span class="skills" data-traduction>{INTRO_SKILLS}</span>
 						</div>
 					</div>
 				</div>
@@ -81,11 +86,11 @@
 		</header>
 
 		<!-- Portfolio Grid Section -->
-		<section id="portfolio">
+		<section id="portfolio" class="hide-on-load">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 text-center">
-						<h2>Portfolio</h2>
+						<h2 data-traduction>{PORTFOLIO_TITLE}</h2>
 						<hr class="star-primary">
 					</div>
 				</div>
@@ -93,7 +98,7 @@
 					<div class="col-sm-4 portfolio-item">
 						<div class="infos">
 							<h3>NaoCar</h3>
-							<p>A robot drives autonomously</p>
+							<p data-traduction>{PORTFOLIO_NAOCAR_DESCRIPTION}</p>
 						</div>
 						<a href="#portfolioNaocar" class="portfolio-link" data-toggle="modal">
 							<div class="caption">
@@ -107,7 +112,7 @@
 					<div class="col-sm-4 portfolio-item">
 						<div class="infos">
 							<h3>Lifetracer</h3>
-							<p>A physically based renderer</p>
+							<p data-traduction>{PORTFOLIO_LIFETRACER_DESCRIPTION}</p>
 						</div>
 						<a href="#portfolioLifetracer" class="portfolio-link" data-toggle="modal">
 							<div class="caption">
@@ -121,7 +126,7 @@
 					<div class="col-sm-4 portfolio-item">
 						<div class="infos">
 							<h3>Clother</h3>
-							<p>A standard cloth simulation</p>
+							<p data-traduction>{PORTFOLIO_CLOTHER_DESCRIPTION}</p>
 						</div>
 						<a href="#portfolioClother" class="portfolio-link" data-toggle="modal">
 							<div class="caption">
@@ -135,7 +140,7 @@
 					<div class="col-sm-4 portfolio-item">
 						<div class="infos">
 							<h3>Animate!</h3>
-							<p>A keyframe animation software</p>
+							<p data-traduction>{PORTFOLIO_ANIMATE_DESCRIPTION}</p>
 						</div>
 						<a href="#portfolioAnimate" class="portfolio-link" data-toggle="modal">
 							<div class="caption">
@@ -149,7 +154,7 @@
 					<div class="col-sm-4 portfolio-item">
 						<div class="infos">
 							<h3>Shace</h3>
-							<p>The solution for photo sharing</p>
+							<p data-traduction>{PORTFOLIO_SHACE_DESCRIPTION}</p>
 						</div>
 						<a href="#portfolioShace" class="portfolio-link" data-toggle="modal">
 							<div class="caption">
@@ -162,8 +167,8 @@
 					</div>
 					<div class="col-sm-4 portfolio-item">
 						<div class="infos">
-							<h3>More...</h3>
-							<p>Other projects and experiments!</p>
+							<h3 data-traduction>{PORTFOLIO_MORE_TITLE}</h3>
+							<p data-traduction>{PORTFOLIO_MORE_DESCRIPTION}</p>
 						</div>
 						<a href="#portfolioMore" class="portfolio-link" data-toggle="modal">
 							<div class="caption">
@@ -179,33 +184,33 @@
 		</section>
 
 		<!-- About Section -->
-		<section class="success" id="about">
+		<section class="success hide-on-load" id="about">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 text-center">
-						<h2>About Me</h2>
+						<h2 data-traduction>{ABOUT_ME_TITLE}</h2>
 						<hr class="star-light">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-4">
-						<p>Mainly interested in everything close to the software development, I started to learn programming when I was 14 by developing some small projects in C, Pascal, and Flowcode.</p>
+						<p data-traduction>{ABOUT_ME_BEFORE_EPITECH}</p>
 					</div>
 					<div class="col-lg-4">
-						<p>Later, I studied at Epitech, for a Master of Information Technology where I learned deeply how to program, to work with a team and to be professional.</p>
+						<p data-traduction>{ABOUT_ME_EPITECH}</p>
 					</div>
 					<div class="col-lg-4">
-						<p>During my fourth year, I spent 2 quarters at UCSD (University of California, San Diego) where I developed my skills in computer graphics (animation and rendering) and algorithms.</p>
+						<p data-traduction>{ABOUT_ME_SAN_DIEGO}</p>
 					</div>
 				</div>
 					<hr class="template-hr"/>
 				<div class="row">
 					<div class="col-lg-8" style="margin-top: 15px;">
-						<p>Now, I'm a computer graphics enthusiast, and I love everything with physical and/or a graphical rendering and interactions (3D, 2D, robotics etc.).</p>
+						<p data-traduction>{ABOUT_ME_NOWADAYS}</p>
 					</div>
 					<div class="col-lg-2 col-lg-offset-2 text-center">
 						<a href="data/resume-en.pdf" target="_blanck" class="btn btn-lg btn-outline">
-							<i class="fa fa-file-pdf-o"></i> Resume
+							<i class="fa fa-file-pdf-o"></i> <span data-traduction>{ABOUT_ME_RESUME}</span>
 						</a>
 					</div>
 				</div>
@@ -213,16 +218,16 @@
 		</section>
 
 		<!-- Footer -->
-		<footer class="text-center">
+		<footer class="text-center hide-on-load">
 			<div class="footer-above">
 				<div class="container">
 					<div class="row">
 						<div class="footer-col col-md-4">
-							<h3>Location</h3>
-							<p>Montpellier<br>France</p>
+							<h3 data-traduction>{FOOTER_LOCATION_TITLE}</h3>
+							<p><span data-traduction>{FOOTER_LOCATION_CITY}</span><br><span data-traduction>{FOOTER_LOCATION_COUNTRY}</span></p>
 						</div>
 						<div class="footer-col col-md-4">
-							<h3>Around the Web</h3>
+							<h3 data-traduction>{FOOTER_WEB_LINKS_TITLE}</h3>
 							<ul class="list-inline">
 								<li>
 									<a href="https://github.com/skanight" target="_blanck" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a>
@@ -242,8 +247,8 @@
 							</ul>
 						</div>
 						<div class="footer-col col-md-4">
-							<h3>What else?</h3>
-							<p>Aside from the Computer Sciences domain, I also love playing music and doing some sport such as skiing and slackline.</p>
+							<h3 data-traduction>{FOOTER_WHAT_ELSE_TITLE}</h3>
+							<p data-traduction>{FOOTER_WHAT_ELSE_CONTENT}</p>
 						</div>
 					</div>
 				</div>
@@ -280,13 +285,13 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-9">
-										<p>NaoCar is a project whose goal is to make the humanoid robot "Nao" drive a child car autonomously. In addition to the very interesting technical part, NaoCar had some success in the world of robotics especially through presentations at various public shows.</p>
+										<p data-traduction>{PROJECTS_NAOCAR_DESCRIPTION}</p>
 									</div>
 									<div class="col-lg-3 key-ideas">
-										<p><strong>Key Ideas</strong></p>
+										<p><strong data-traduction>{PROJETCS_KEY_IDEAS}</strong></p>
 										<ul>
 											<li>> <a href="http://www.aldebaran.com/en/humanoid-robot/nao-robot" target="_blanck">Nao</a></li>
-											<li>> Autonomous</li>
+											<li>> <span data-traduction>{PROJECTS_NAOCAR_KEY_IDEA_AUTONOMOUS}</span></li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Kinect" target="_blanck">Kinect</a></li>
 											<li>> <a href="http://www.oculus.com/rift/" target="_blanck">Oculus Rift</a></li>
 											<li>> <a href="https://www.leapmotion.com/" target="_blanck">LeapMotion</a></li>
@@ -295,11 +300,11 @@
 									</div>
 								</div>
 								<div class="additional-infos">
-									<i class="fa fa-users"></i><strong>4 people</strong> |
-									<i class="fa fa-calendar"></i><strong>September 2012 - April 2013</strong> |
+									<i class="fa fa-users"></i><strong data-traduction>{PROJECTS_NAOCAR_PEOPLE}</strong> |
+									<i class="fa fa-calendar"></i><strong data-traduction>{PROJECTS_NAOCAR_DATE}</strong> |
 									<i class="fa fa-external-link"></i><strong><a href="https://github.com/Nivl/nao-car" target="_blanck">Github</a></strong>
 								</div>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <span data-traduction>{PROJETCS_CLOSE}</span></button>
 							</div>
 						</div>
 						<div class="close-modal" data-dismiss="modal">
@@ -324,26 +329,26 @@
 								<img src="img/portfolio/lifetracer-big.png" class="img-responsive img-centered" alt="">
 								<div class="row">
 									<div class="col-lg-9">
-										<p>I developed this Physically Based Renderer for the CSE 168 class at UCSD (University of California, San Diego) during the Spring 2014 quarter. I learned and used a lot of concepts such as simple pathtracing, photon-mapping, BRDFs etc. Here is my <a href="http://graphics.ucsd.edu/courses/cse168_s14/finals/olivier_samuel/blog.html" target="_blanck">final project page</a></p>
+										<p><span data-traduction>{PROJECTS_LIFETRACER_DESCRIPTION}</span> <a href="http://graphics.ucsd.edu/courses/cse168_s14/finals/olivier_samuel/blog.html" target="_blanck" data-traduction>{PROJECTS_LIFETRACER_DESCRIPTION_LINK}</a>.</p>
 									</div>
 									<div class="col-lg-3 key-ideas">
-										<p><strong>Key Ideas</strong></p>
+										<p><strong data-traduction>{PROJETCS_KEY_IDEAS}</strong></p>
 										<ul>
 											<li>> 3D</li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Ray_tracing_(graphics)" target="_blanck">Raytracing</a></li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Path_tracing" target="_blanck">Pathtracing</a></li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Photon_mapping" target="_blanck">Photon-mapping</a></li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function" target="_blanck">BRDF</a></li>
-											<li>> <a href="http://en.wikipedia.org/wiki/Texture_mapping" target="_blanck">Texture Mapping</a></li>
+											<li>> <a href="http://en.wikipedia.org/wiki/Texture_mapping" target="_blanck" data-traduction>{PROJECTS_LIFETRACER_KEY_IDEA_TEXTURE_MAPPING}</a></li>
 										</ul>
 									</div>
 								</div>
 								<div class="additional-infos">
-									<i class="fa fa-user"></i><strong>Just me</strong> |
-									<i class="fa fa-calendar"></i><strong>April - June 2014</strong> |
+									<i class="fa fa-user"></i><strong data-traduction>{PROJECTS_JUST_ME}</strong> |
+									<i class="fa fa-calendar"></i><strong data-traduction>{PROJECTS_LIFETRACER_DATE}</strong> |
 									<i class="fa fa-external-link"></i><strong><a href="https://github.com/skanight/raytracer" target="_blanck">Github</a></strong>
 								</div>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <span data-traduction>{PROJETCS_CLOSE}</span></button>
 							</div>
 						</div>
 						<div class="close-modal" data-dismiss="modal">
@@ -369,27 +374,27 @@
 
 								<div class="row">
 									<div class="col-lg-9">
-										<p>I developed this Cloth Simulation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. I simulate the cloth using the spring damper technique and I compute the gravity, aerodynamic forces (wind), collisions with a ball and the floor. During this project, I also learned to implement a whole parallel computing system using <a href="https://www.khronos.org/opencl" target="_blanck">OpenCL</a>. For the renderer, I used OpenGL based on my own vertex and fragment shaders.</p>
+										<p><span data-traduction>{PROJECTS_CLOTHER_DESCRIPTION_PART_1}</span> <a href="https://www.khronos.org/opencl" target="_blanck" data-traduction>OpenCL</a>. <span data-traduction>{PROJECTS_CLOTHER_DESCRIPTION_PART_2}</span> <a href="https://www.khronos.org/opengl" target="_blanck" data-traduction>OpenGL</a> <span data-traduction>{PROJECTS_CLOTHER_DESCRIPTION_PART_3}</span></p>
 									</div>
 									<div class="col-lg-3 key-ideas">
-										<p><strong>Key Ideas</strong></p>
+										<p><strong data-traduction>{PROJETCS_KEY_IDEAS}</strong></p>
 										<ul>
 											<li>> 3D</li>
 											<li>> <a href="https://www.khronos.org/opencl" target="_blanck">OpenCL</a></li>
-											<li>> <a href="https://www.khronos.org/opencl" target="_blanck">OpenGL</a></li>
+											<li>> <a href="https://www.khronos.org/opengl" target="_blanck">OpenGL</a></li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Shader" target="_blanck">Shader</a></li>
-											<li>> Real-time</li>
-											<li>> Collisions</li>
+											<li>> <span data-traduction>{PROJECTS_CLOTHER_KEY_IDEA_REAL_TIME}</span></li>
+											<li>> <span data-traduction>{PROJECTS_CLOTHER_KEY_IDEA_COLLISIONS}</span></li>
 											<li>> Gui / <a href="http://qt-project.org/" target="_blanck">Qt</a></li>
 										</ul>
 									</div>
 								</div>
 								<div class="additional-infos">
-									<i class="fa fa-user"></i><strong>Just me</strong> |
-									<i class="fa fa-calendar"></i><strong>March 2014</strong> |
+									<i class="fa fa-user"></i><strong data-traduction>{PROJECTS_JUST_ME}</strong> |
+									<i class="fa fa-calendar"></i><strong data-traduction>{PROJECTS_CLOTHER_DATE}</strong> |
 									<i class="fa fa-external-link"></i><strong><a href="https://github.com/skanight/ClothSimulation" target="_blanck">Github</a></strong>
 								</div>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <span data-traduction>{PROJETCS_CLOSE}</span></button>
 							</div>
 						</div>
 						<div class="close-modal" data-dismiss="modal">
@@ -415,29 +420,29 @@
 
 								<div class="row">
 									<div class="col-lg-9">
-										<p>I developed this Key frame Animation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. The Animation Editor handles several interpolation and extrapolation types (smooth, linear, constant interpolation etc.). Moreover, I use a skeleton to apply the animation, I add the skinning on it in order to have a better visual and I finally render it using <a href="https://www.khronos.org/opengl" target="_blanck">OpenGL</a> with my own vertex and fragment shaders.</p>
+										<p><span data-traduction>{PROJECTS_ANIMATE_DESCRIPTION_PART_1}</span> <a href="https://www.khronos.org/opengl" target="_blanck" data-traduction>OpenGL</a> <spam data-traduction>{PROJECTS_ANIMATE_DESCRIPTION_PART_2}</span></p>
 									</div>
 									<div class="col-lg-3 key-ideas">
-										<p><strong>Key Ideas</strong></p>
+										<p><strong data-traduction>{PROJETCS_KEY_IDEAS}</strong></p>
 										<ul>
 											<li>> 3D</li>
-											<li>> <a href="http://en.wikipedia.org/wiki/Animation" target="_blanck">Animation</a></li>
-											<li>> <a href="http://en.wikipedia.org/wiki/Key_frame" target="_blanck">Key Frame</a></li>
-											<li>> <a href="http://en.wikipedia.org/wiki/Skeletal_animation" target="_blanck">Skeleton</a></li>
-											<li>> Skinning</li>
+											<li>> <a href="http://en.wikipedia.org/wiki/Animation" target="_blanck" data-traduction>{PROJECTS_ANIMATE_KEY_IDEA_ANIMATION}</a></li>
+											<li>> <a href="http://en.wikipedia.org/wiki/Key_frame" target="_blanck" data-traduction>{PROJECTS_ANIMATE_KEY_IDEA_KEY_FRAME}</a></li>
+											<li>> <a href="http://en.wikipedia.org/wiki/Skeletal_animation" target="_blanck" data-traduction>{PROJECTS_ANIMATE_KEY_IDEA_SKELETON}</a></li>
+											<li>> <span data-traduction>{PROJECTS_ANIMATE_KEY_IDEA_SKINNING}</span></li>
 											<li>> <a href="https://www.khronos.org/opengl" target="_blanck">OpenGL</a></li>
 											<li>> <a href="http://en.wikipedia.org/wiki/Shader" target="_blanck">Shader</a></li>
-											<li>> Real-time</li>
+											<li>> <span data-traduction>{PROJECTS_ANIMATE_KEY_IDEA_REAL_TIME}</span></li>
 											<li>> Gui / <a href="http://qt-project.org/" target="_blanck">Qt</a></li>
 										</ul>
 									</div>
 								</div>
 								<div class="additional-infos">
-									<i class="fa fa-user"></i><strong>Just me</strong> |
-									<i class="fa fa-calendar"></i><strong>January - February 2014</strong> |
+									<i class="fa fa-user"></i><strong data-traduction>{PROJECTS_JUST_ME}</strong> |
+									<i class="fa fa-calendar"></i><strong data-traduction>{PROJECTS_ANIMATE_DATE}</strong> |
 									<i class="fa fa-external-link"></i><strong><a href="https://github.com/skanight/Animation" target="_blanck">Github</a></strong>
 								</div>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <span data-traduction>{PROJETCS_CLOSE}</span></button>
 							</div>
 						</div>
 						<div class="close-modal" data-dismiss="modal">
@@ -462,13 +467,13 @@
 								<img src="img/portfolio/shace.png" class="img-responsive img-centered" alt=""/>
 								<div class="row">
 									<div class="col-lg-9">
-										<p>Shace is a project I work on with 5 other persons to build an answer for a question we often ask during and after an event (with family, friends etc.) : "How do we do for the pictures?". Shace is <a href="http://api.shace.io/" target="_blank">a RESTful API</a>, <a href="http://shace.io/" target="_blank">a website</a>, mobile applications and coming soon, a Desktop version.</p>
+										<p><span data-traduction>{PROJECTS_SHACE_DESCRIPTION_PART_1}</span> <a href="http://api.shace.io/" target="_blank" data-traduction>{PROJECTS_SHACE_DESCRIPTION_PART_2}</a>, <a href="http://shace.io/" target="_blank" data-traduction>{PROJECTS_SHACE_DESCRIPTION_PART_3}</a>, <span data-traduction>{PROJECTS_SHACE_DESCRIPTION_PART_4}</span>	</p>
 									</div>
 									<div class="col-lg-3 key-ideas">
-										<p><strong>Key Ideas</strong></p>
+										<p><strong data-traduction>{PROJETCS_KEY_IDEAS}</strong></p>
 										<ul>
 											<li>> Sharing</li>
-											<li>> <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blanck">RESTful API</a></li>
+											<li>> <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blanck" data-traduction>{PROJECTS_SHACE_KEY_IDEA_RESTFUL_API}</a></li>
 											<li>> <a href="https://www.playframework.com/" target="_blanck">Play</a></li>
 											<li>> <a href="https://angularjs.org/" target="_blanck">AngularJS</a></li>
 											<li>> <a href="https://www.apple.com/ios/" target="_blanck">iOS</a></li>
@@ -478,11 +483,11 @@
 									</div>
 								</div>
 								<div class="additional-infos">
-									<i class="fa fa-users"></i><strong>6 People</strong> |
-									<i class="fa fa-calendar"></i><strong>December 2012 - Today</strong> |
+									<i class="fa fa-users"></i><strong data-traduction>{PROJECTS_SHACE_PEOPLE}</strong> |
+									<i class="fa fa-calendar"></i><strong data-traduction>{PROJECTS_SHACE_DATE}</strong> |
 									<i class="fa fa-external-link"></i><strong><a href="https://github.com/shace" target="_blanck">Github</a></strong>
 								</div>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <span data-traduction>{PROJETCS_CLOSE}</span></button>
 							</div>
 						</div>
 						<div class="close-modal" data-dismiss="modal">
@@ -502,7 +507,7 @@
 					<div class="col-lg-8 col-lg-offset-2 modal-column">
 						<div class="row">
 							<div class="modal-body">
-								<h2>More projects</h2>
+								<h2 data-traduction>{PROJECTS_MORE_TITLE}</h2>
 								<hr class="star-primary"/>
 
 								<div class="row small-project">
@@ -513,14 +518,14 @@
 										<a href="projects/Wolf3D/index.html" target="_blanck" class="portfolio-link" target="_blank">
 											<div class="caption">
 												<div class="caption-content">
-													<h3><i class="fa fa-play"></i>Live Demo</h3>
+													<h3><i class="fa fa-play"></i><span data-traduction>{PROJECTS_MORE_LIVE_DEMO}</span></h3>
 												</div>
 											</div>
 											<img src="img/portfolio/wolf3d.png" class="img-responsive" alt=""/>
 										</a>
 									</div>
 									<div class="col-lg-7">
-										<p>The Wolf3D is tribute to the <a href="http://en.wikipedia.org/wiki/Wolfenstein_3D" target="_blanck">Wolfenstein 3D</a>a simple First Person game where the 3D is handled using the <a href="http://en.wikipedia.org/wiki/Ray_casting" target="_blanck">raycasting method</a>.<br/>I only used a HTML5 2D Canvas for the game screen.</p>
+										<p><span data-traduction>{PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_1}</span> <a href="http://en.wikipedia.org/wiki/Wolfenstein_3D" target="_blanck" data-traduction>{PROJECTS_MORE_WOLF3D_DESCRIPTION_WOLF_LINK}</a> <span data-traduction>{PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_2}</span> <a href="http://en.wikipedia.org/wiki/Ray_casting" target="_blanck" data-traduction>{PROJECTS_MORE_WOLF3D_DESCRIPTION_RAYCASTING_LINK}</a>.<br/><span data-traduction>{PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_3}</span></p>
 									</div>
 								</div>
 
@@ -534,17 +539,17 @@
 										<a href="projects/FDF/index.html" class="portfolio-link" target="_blank">
 											<div class="caption">
 												<div class="caption-content">
-													<h3><i class="fa fa-play"></i>Live Demo</h3>
+													<h3><i class="fa fa-play"></i><span data-traduction>{PROJECTS_MORE_LIVE_DEMO}</span></h3>
 												</div>
 											</div>
 											<img src="img/portfolio/fdf.png" class="img-responsive" alt=""/>
 										</a>
 									</div>
 									<div class="col-lg-7">
-										<p>The FDF is a representation of a 3D grid where the 3D is handled using a simple <a href="http://en.wikipedia.org/wiki/3D_projection#Perspective_projection" target="_blanck">perspective projection</a> from 3D to 2D in order to draw it on a HTML5 2D Canvas.</p>
+										<p><span data-traduction>{PROJECTS_MORE_FDF_DESCRIPTION_PART_1}</span> <a href="http://en.wikipedia.org/wiki/3D_projection#Perspective_projection" target="_blanck" data-traduction>{PROJECTS_MORE_FDF_DESCRIPTION_PROJECTION_LINK}</a> <span data-traduction>{PROJECTS_MORE_FDF_DESCRIPTION_PART_2}</span></p>
 									</div>
 								</div>
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> <span data-traduction>{PROJETCS_CLOSE}</span></button>
 							</div>
 						</div>
 						<div class="close-modal" data-dismiss="modal">
@@ -570,6 +575,8 @@
 
 		<!-- Custom Theme JavaScript -->
 		<script src="js/freelancer.js"></script>
+		<script src="js/script.js"></script>
+		<script src="js/traduction.js"></script>
 
 	</body>
 </html>

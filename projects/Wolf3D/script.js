@@ -143,7 +143,7 @@ function drawWalls() {
 			} else {
 				color = "#A9260F";
 			}
-			// drawRect(x, cHeight / 2 - halfHeight, 1, 2 * halfHeight, color);
+			drawRect(x, cHeight / 2 - halfHeight, 1, 2 * halfHeight, color);
 			// drawLine(x, cHeight / 2 - halfHeight, x, cHeight / 2 + halfHeight, color);
 			// for (var y = cHeight / 2 - halfHeight; y < cHeight / 2 + halfHeight; ++y) {
 			// 	drawPixel(x, y, color);

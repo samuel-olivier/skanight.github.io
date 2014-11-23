@@ -1,9 +1,9 @@
 {
 	"en": {
-		"TITLE_JOB": "Software Engineer",	
+		"TITLE": "Samuel Olivier - Software Engineer",	
 
-		"HEADER_PORTFOLIO": "Portfolio",
 		"HEADER_TOGGLE_NAV": "Toggle navigation",
+		"HEADER_PORTFOLIO": "Portfolio",
 		"HEADER_ABOUT_ME": "About Me",
 
 		"INTRO_SKILLS": "Software Development - Computer Graphics - New technologies",
@@ -14,6 +14,7 @@
 		"PORTFOLIO_CLOTHER_DESCRIPTION": "A standard cloth simulation",
 		"PORTFOLIO_ANIMATE_DESCRIPTION": "A keyframe animation software",
 		"PORTFOLIO_SHACE_DESCRIPTION": "The solution for photo sharing",
+		"PORTFOLIO_MORE_TITLE": "More...",
 		"PORTFOLIO_MORE_DESCRIPTION": "Other projects and experiments!",
 
 
@@ -42,19 +43,20 @@
 		"PROJECTS_NAOCAR_PEOPLE": "4 people",
 		"PROJECTS_NAOCAR_DATE": "September 2012 - April 2013",
 
-		"PROJECTS_LIFETRACER_DESCRIPTION": "I developed this Physically Based Renderer for the CSE 168 class at UCSD (University of California, San Diego) during the Spring 2014 quarter. I learned and used a lot of concepts such as simple pathtracing, photon-mapping, BRDFs etc. Here is my ",
+		"PROJECTS_LIFETRACER_DESCRIPTION": "I developed this Physically Based Renderer for the CSE 168 class at UCSD (University of California, San Diego) during the Spring 2014 quarter. I learned and used a lot of concepts such as simple pathtracing, photon-mapping, BRDFs etc. Here is my",
 		"PROJECTS_LIFETRACER_DESCRIPTION_LINK": "final project page",
 		"PROJECTS_LIFETRACER_KEY_IDEA_TEXTURE_MAPPING": "Texture Mapping",
 		"PROJECTS_LIFETRACER_DATE": "April - June 2014",
 
-		"PROJECTS_CLOTHER_DESCRIPTION_PART_1": "I developed this Cloth Simulation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. I simulate the cloth using the spring damper technique and I compute the gravity, aerodynamic forces (wind), collisions with a ball and the floor. During this project, I also learned to implement a whole parallel computing system using ",
-		"PROJECTS_CLOTHER_DESCRIPTION_PART_2": ". For the renderer, I used OpenGL based on my own vertex and fragment shaders.",
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_1": "I developed this Cloth Simulation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. I simulate the cloth using the spring damper technique and I compute the gravity, aerodynamic forces (wind), collisions with a ball and the floor. During this project, I also learned to implement a whole parallel computing system using",
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_2": "For the renderer, I used",
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_3": "based on my own vertex and fragment shaders.",
 		"PROJECTS_CLOTHER_KEY_IDEA_REAL_TIME": "Real-time",
 		"PROJECTS_CLOTHER_KEY_IDEA_COLLISIONS": "Collisions",
 		"PROJECTS_CLOTHER_DATE": "March 2014",
 
-		"PROJECTS_ANIMATE_DESCRIPTION_PART_1": "I developed this Key frame Animation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. The Animation Editor handles several interpolation and extrapolation types (smooth, linear, constant interpolation etc.). Moreover, I use a skeleton to apply the animation, I add the skinning on it in order to have a better visual and I finally render it using ",
-		"PROJECTS_ANIMATE_DESCRIPTION_PART_2": " with my own vertex and fragment shaders.",
+		"PROJECTS_ANIMATE_DESCRIPTION_PART_1": "I developed this Key frame Animation software and its basic real-time renderer for the CSE 169 class at UCSD (University of California, San Diego) during the Winter 2014 quarter. The Animation Editor handles several interpolation and extrapolation types (smooth, linear, constant interpolation etc.). Moreover, I use a skeleton to apply the animation, I add the skinning on it in order to have a better visual and I finally render it using",
+		"PROJECTS_ANIMATE_DESCRIPTION_PART_2": "with my own vertex and fragment shaders.",
 		"PROJECTS_ANIMATE_KEY_IDEA_ANIMATION": "Animation",
 		"PROJECTS_ANIMATE_KEY_IDEA_KEY_FRAME": "Key Frame",
 		"PROJECTS_ANIMATE_KEY_IDEA_SKELETON": "Skeleton",
@@ -62,24 +64,111 @@
 		"PROJECTS_ANIMATE_KEY_IDEA_REAL_TIME": "Real-time",
 		"PROJECTS_ANIMATE_DATE": "January - February 2014",
 
-		"PROJECTS_SHACE_DESCRIPTION_PART_1": "Shace is a project I work on with 5 other persons to build an answer for a question we often ask during and after an event (with family, friends etc.) : \"How do we do for the pictures?\". Shace is ",
+		"PROJECTS_SHACE_DESCRIPTION_PART_1": "Shace is a project I work on with 5 other persons to build an answer for a question we often ask during and after an event (with family, friends etc.) : \"How do we do for the pictures?\". Shace is",
 		"PROJECTS_SHACE_DESCRIPTION_PART_2": "a RESTful API",
 		"PROJECTS_SHACE_DESCRIPTION_PART_3": "a website",
-		"PROJECTS_SHACE_DESCRIPTION_PART_4": ", mobile applications and coming soon, a Desktop version.",
+		"PROJECTS_SHACE_DESCRIPTION_PART_4": "mobile applications and coming soon, a Desktop version.",
 		"PROJECTS_SHACE_KEY_IDEA_RESTFUL_API": "RESTful API",
 		"PROJECTS_SHACE_PEOPLE": "6 people",
 		"PROJECTS_SHACE_DATE": "December 2012 - Today",
 
 		"PROJECTS_MORE_TITLE": "More projects",
+		"PROJECTS_MORE_LIVE_DEMO": "Live Demo",
 
-		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_1": "The Wolf3D is tribute to the ",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_1": "The Wolf3D is tribute to the",
 		"PROJECTS_MORE_WOLF3D_DESCRIPTION_WOLF_LINK": "Wolfenstein 3D",
-		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_2": "a simple First Person game where the 3D is handled using the ",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_2": "a simple First Person game where the 3D is handled using the",
 		"PROJECTS_MORE_WOLF3D_DESCRIPTION_RAYCASTING_LINK": "raycasting method",
 		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_3": "I only used a HTML5 2D Canvas for the game screen.",
 
-		"PROJECTS_MORE_FDF_DESCRIPTION_PART_1": "The FDF is a representation of a 3D grid where the 3D is handled using a simple ",
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_1": "The FDF is a representation of a 3D grid where the 3D is handled using a simple",
 		"PROJECTS_MORE_FDF_DESCRIPTION_PROJECTION_LINK": "perspective projection",
-		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": " from 3D to 2D in order to draw it on a HTML5 2D Canvas.",
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": "from 3D to 2D in order to draw it on a HTML5 2D Canvas."
+	},
+	"fr": {
+		"TITLE": "Samuel Olivier - Développeur",	
+
+		"HEADER_TOGGLE_NAV": "Afficher la navigation",
+		"HEADER_PORTFOLIO": "Portfolio",
+		"HEADER_ABOUT_ME": "À propos",
+
+		"INTRO_SKILLS": "Developpement Logiciel - Infographie - Nouvelles Technologies",
+
+		"PORTFOLIO_TITLE": "Portfolio",
+		"PORTFOLIO_NAOCAR_DESCRIPTION": "Un robot conduit de façon autonome",
+		"PORTFOLIO_LIFETRACER_DESCRIPTION": "Un moteur de rendu physiquement réaliste",
+		"PORTFOLIO_CLOTHER_DESCRIPTION": "Un logiciel de simulation de tissu",
+		"PORTFOLIO_ANIMATE_DESCRIPTION": "Un logiciel d'animation",
+		"PORTFOLIO_SHACE_DESCRIPTION": "La solution pour le partage de photo",
+		"PORTFOLIO_MORE_TITLE": "Un peu plus...",
+		"PORTFOLIO_MORE_DESCRIPTION": "D'autres projets et expériences",
+
+
+		"ABOUT_ME_TITLE": "À propos",
+		"ABOUT_ME_BEFORE_EPITECH": "Principalement intéressé par tout ce qui se rapproche du développement logiciel, j'ai commencé à apprendre à programmer à l'age de 14 ans en développant de simples projets en C, Pascal et Flowcode.",
+		"ABOUT_ME_EPITECH": "Ensuite, j'ai étudié à Epitech pour un master d'informatique où j'ai appris à programmer, travailler en équipe et être professionnel.",
+		"ABOUT_ME_SAN_DIEGO": "Durant ma quatrième année, j'ai passé 2 trimestres à UCSD (University of California, San Diego) où j'ai développé mes compétences en infographie (animation et rendu graphique) et en algorithmie.",
+		"ABOUT_ME_NOWADAYS": "Maintenant, je suis spécialement intéressé par l'infographie, and j'aime tout ce qui a des interactions et un rendu graphique ou physique (3D, 2D, robotique etc.).",
+		"ABOUT_ME_RESUME_LINK": "data/resume-fr.pdf",
+		"ABOUT_ME_RESUME": "CV",
+
+		"FOOTER_LOCATION_TITLE": "Localisation",
+		"FOOTER_LOCATION_CITY": "Montpellier",
+		"FOOTER_LOCATION_COUNTRY": "France",
+		"FOOTER_WEB_LINKS_TITLE": "Sur le web",
+		"FOOTER_WEB_LINKS_LINKED_IN": "https://www.linkedin.com/in/samuelolivier/fr",
+		"FOOTER_WHAT_ELSE_TITLE": "What else?",
+		"FOOTER_WHAT_ELSE_CONTENT": "Mis à part le domaine de l'informatique, j'aime également jouer de la musique et faire du sport comme le ski et la slackline.",
+
+		"PROJETCS_KEY_IDEAS": "En bref",
+		"PROJETCS_CLOSE": "Fermer",
+		"PROJECTS_JUST_ME": "Individuel",
+		
+		"PROJECTS_NAOCAR_DESCRIPTION": "Naocar est un projet dont le but est de permettre au robot humanoïde \"Nao\" de conduire une voiture pour enfant de façon autonome. Mis à part la partie technique très intéressante, Naocar a eu du succès dans le monde de la robotique spécialement au travers de différents salons publics.",
+		"PROJECTS_NAOCAR_KEY_IDEA_AUTONOMOUS": "Autonomie",
+		"PROJECTS_NAOCAR_PEOPLE": "4 personnes",
+		"PROJECTS_NAOCAR_DATE": "Septembre 2012 - Avril 2013",
+
+		"PROJECTS_LIFETRACER_DESCRIPTION": "J'ai développé ce moteur de rendu physiquiquement réaliste pour le module CSE 168 à UCSD (University of California, San Diego). J'ai appris et utilisé beaucoup de concepts comme le pathtracing, le photon-mapping, les BRDFs etc. Voici ma",
+		"PROJECTS_LIFETRACER_DESCRIPTION_LINK": "page du projet final",
+		"PROJECTS_LIFETRACER_KEY_IDEA_TEXTURE_MAPPING": "Mapping de Texture",
+		"PROJECTS_LIFETRACER_DATE": "Avril - Juin 2014",
+
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_1": "J'ai développé ce logiciel de simulation de tissu ainsi que son moteur de rendu temps réel pour le module CSE 169 à UCSD (University of California, San Diego). Je simule le tissu grâce à la techinique des \"spring-dampers\" et je calcule la gravité, les forces aérodynamiques (le vent) et les collisions avec la balle et le sol. Pour ce projet, j'ai également appris à implémenter un système complet de calculs parrallélisés en utilisant",
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_2": "Pour le moteur de rendu, j'utilise",
+		"PROJECTS_CLOTHER_DESCRIPTION_PART_3": "en me basant sur mes propres vertex et fragment shaders.",
+		"PROJECTS_CLOTHER_KEY_IDEA_REAL_TIME": "Temps réel",
+		"PROJECTS_CLOTHER_KEY_IDEA_COLLISIONS": "Collisions",
+		"PROJECTS_CLOTHER_DATE": "Mars 2014",
+
+		"PROJECTS_ANIMATE_DESCRIPTION_PART_1": "J'ai développé ce logiciel d'animation (par image clé) et son moteur de rendu temps réel pour le module CSE 169 à UCSD (University of California, San Diego). L'éditeur d'animation gère plusieurs types d'interpolation et d'extrapolation (interpolation lisse, linéaire, constante etc.). De plus, j'utilise un squelette auquel j'applique l'animation, je lui ajoute la peau pour avoir un meilleur visuel et enfin je rends le tout en utilisant",
+		"PROJECTS_ANIMATE_DESCRIPTION_PART_2": "avec mes propres vertex et fragment shaders.",
+		"PROJECTS_ANIMATE_KEY_IDEA_ANIMATION": "Animation",
+		"PROJECTS_ANIMATE_KEY_IDEA_KEY_FRAME": "Images Clés",
+		"PROJECTS_ANIMATE_KEY_IDEA_SKELETON": "Squelette",
+		"PROJECTS_ANIMATE_KEY_IDEA_SKINNING": "Skinning",
+		"PROJECTS_ANIMATE_KEY_IDEA_REAL_TIME": "Temps réel",
+		"PROJECTS_ANIMATE_DATE": "Janvier - Février 2014",
+
+		"PROJECTS_SHACE_DESCRIPTION_PART_1": "Shace est un projet sur lequel je travaille avec 5 autres personnes pour construire une réponse à une question qu'on se pose souvent pendant et après un évènement (en famille, entre amis etc.) : \"On fait comment pour les photos?\". Shace, c'est",
+		"PROJECTS_SHACE_DESCRIPTION_PART_2": "une API RESTful",
+		"PROJECTS_SHACE_DESCRIPTION_PART_3": "un site web",
+		"PROJECTS_SHACE_DESCRIPTION_PART_4": "des applications mobiles et bientôt, une version de bureau..",
+		"PROJECTS_SHACE_KEY_IDEA_RESTFUL_API": "API RESTful",
+		"PROJECTS_SHACE_PEOPLE": "6 personnes",
+		"PROJECTS_SHACE_DATE": "Décembre 2012 - Aujourd'hui",
+
+		"PROJECTS_MORE_TITLE": "D'autre projets",
+		"PROJECTS_MORE_LIVE_DEMO": "Démo en direct",
+
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_1": "Le wolf3D est un hommage au",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_WOLF_LINK": "Wolfenstein 3D",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_2": "un simple jeu entre permière personne où la 3D est gérée en utilisant la",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_RAYCASTING_LINK": "méthode de raycasting",
+		"PROJECTS_MORE_WOLF3D_DESCRIPTION_PART_3": "J'utilise seulement un Canvas HTML5 en 2D pour l'écran de jeu.",
+
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_1": "Le FDF (Fil de Fer) est une représentation d'une grille en 3D en utilisant une simple",
+		"PROJECTS_MORE_FDF_DESCRIPTION_PROJECTION_LINK": "projection en perspective",
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": "depuis la 3D vers la 2D pour pouvoir rendre sur un Canvas HTML5 en 2D."
 	}
 }

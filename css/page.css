@@ -1,0 +1,11 @@
+.hide-on-load {
+    display: none;
+}
+
+.navbar a.language-en {
+	padding-right: 2px;
+}
+
+.navbar a.language-fr {
+	padding-left: 2px;
+}
