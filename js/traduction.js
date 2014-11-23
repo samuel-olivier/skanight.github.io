@@ -28,15 +28,19 @@ function Traduction() {
   }
 
   this.load = function(fileData) {
-    var obj = JSON.parse(fileData);
-    for (var lang in obj) {
-      if (this.trad[lang] === undefined) {
-        this.trad[lang] = {};
+    try {
+      var obj = JSON.parse(fileData);
+      for (var lang in obj) {
+        if (this.trad[lang] === undefined) {
+          this.trad[lang] = {};
+        }
+        var langItems = obj[lang];
+        for (id in langItems) {
+          this.trad[lang][id] = langItems[id];
+        }
       }
-      var langItems = obj[lang];
-      for (id in langItems) {
-        this.trad[lang][id] = langItems[id];
-      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
