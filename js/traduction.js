@@ -29,7 +29,6 @@ function Traduction() {
 
   this.load = function(fileData) {
     try {
-      console.log(fileData);
       var obj = fileData;//JSON.parse(fileData);
       for (var lang in obj) {
         if (this.trad[lang] === undefined) {
