@@ -1,0 +1,107 @@
+<html>
+	<head>
+		<title>Cloth Simulation</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.min.js"></script>
+		<script src="js/TrackballControls.js"></script>
+		<script>
+			function coordToIndex(width, x, y) {
+				return y * width + x;
+			}
+
+			function createCloth(width, height, segmentNumberWidth, segmentNumberHeight) {
+				var res = new THREE.Geometry(),
+					segmentWidth = width / segmentNumberWidth,
+					segmentHeight = height / segmentNumberHeight;					
+				for (var x = 0; x <= segmentNumberWidth; ++x) {
+					for (var y = 0; y <= segmentNumberHeight; ++y) {
+						res.vertices.push(new THREE.Vector3(-width / 2 + x * segmentWidth, height / 2 - y * segmentHeight, 0));
+					}
+				}
+				var w = segmentNumberWidth + 1;
+				for (var x = 0; x < segmentNumberWidth; ++x) {
+					for (var y = 0; y < segmentNumberHeight; ++y) {
+						res.faces.push(
+								new THREE.Face3(coordToIndex(w, x, y), coordToIndex(w, x + 1, y), coordToIndex(w, x + 1, y + 1)),
+								new THREE.Face3(coordToIndex(w, x, y), coordToIndex(w, x + 1, y + 1), coordToIndex(w, x, y + 1))
+							);
+					}
+				}
+				console.log(res);
+				res.computeFaceNormals();
+				return res;
+			}
+
+	        var clock = new THREE.Clock();
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.shadowMapEnabled = true;
+			document.body.appendChild( renderer.domElement );
+
+			var trackballControls = new THREE.TrackballControls(camera);
+			trackballControls.rotateSpeed = 1.0;
+	        trackballControls.zoomSpeed = 1.0;
+	        trackballControls.panSpeed = 1.0;
+	//        trackballControls.noZoom=false;
+	        trackballControls.noPan=false;
+	        trackballControls.staticMoving = true;
+	//        trackballControls.dynamicDampingFactor=0.3;
+
+			// var clothGeometry = new THREE.PlaneGeometry( 1.6, 0.9, 10, 10);
+			var clothGeometry = createCloth(1.6, 0.9, 10, 10);
+			var clothMaterial = new THREE.MeshLambertMaterial( { color: 0x00ff00, side: THREE.DoubleSide } );
+			var cloth = new THREE.Mesh( clothGeometry, clothMaterial );
+			cloth.castShadow = true;
+			scene.add( cloth );
+
+			var planeGeometry = new THREE.PlaneGeometry( 10, 10, 1 );
+			var planeMaterial = new THREE.MeshLambertMaterial( { color: 0x848484, side: THREE.DoubleSide } );
+			var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+			plane.position.y = -2;
+			plane.rotation.x = Math.PI / 2;
+			plane.receiveShadow = true;
+			scene.add( plane );
+			console.log(plane);
+
+			camera.position.z = 3;
+
+			// var light = new THREE.SpotLight( 0xC0BFAD );
+			var light = new THREE.SpotLight( 0xC0BFAD, 1.5 );
+			light.position.set( 5, 20, 10 );
+			light.castShadow = true;
+			light.shadowMapWidth = 1024;
+			light.shadowMapHeight = 1024;
+
+			light.shadowCameraNear = 5;
+			light.shadowCameraFar = 100;
+			light.shadowCameraFov = 30;
+			light.shadowCameraVisible = true;
+			scene.add( light );
+
+			var ambientLight = new THREE.AmbientLight(0x383838);
+        	scene.add(ambientLight);
+
+
+			var render = function () {
+				var delta = clock.getDelta();
+
+	            trackballControls.update(delta);
+	
+				cloth.rotation.y += 0.01;
+
+				requestAnimationFrame( render );
+				renderer.render(scene, camera);
+			};
+
+			render();
+		</script>
+	</body>
+</html>
