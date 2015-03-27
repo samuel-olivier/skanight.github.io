@@ -25,7 +25,7 @@ function Scene() {
 	this.light.shadowCameraNear = 5;
 	this.light.shadowCameraFar = 100;
 	this.light.shadowCameraFov = 30;
-	this.light.shadowCameraVisible = true;
+	// this.light.shadowCameraVisible = true;
 	this.scene.add( this.light );
 
 	this.ambientLight = new THREE.AmbientLight(0x383838);
