@@ -83,7 +83,9 @@
 
 		"PROJECTS_MORE_FDF_DESCRIPTION_PART_1": "The FDF is a representation of a 3D grid where the 3D is handled using a simple",
 		"PROJECTS_MORE_FDF_DESCRIPTION_PROJECTION_LINK": "perspective projection",
-		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": "from 3D to 2D in order to draw it on a HTML5 2D Canvas."
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": "from 3D to 2D in order to draw it on a HTML5 2D Canvas.",
+
+		"PROJECTS_MORE_CLOTHERV2_DESCRIPTION": "Clother V2 is the webgl porting using Three.JS of the project I originally developed in C++ using OpenGL when I was in San Diego."
 	},
 	"fr": {
 		"TITLE": "Samuel Olivier - Développeur",	
@@ -169,6 +171,8 @@
 
 		"PROJECTS_MORE_FDF_DESCRIPTION_PART_1": "Le FDF (Fil de Fer) est une représentation d'une grille en 3D en utilisant une simple",
 		"PROJECTS_MORE_FDF_DESCRIPTION_PROJECTION_LINK": "projection en perspective",
-		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": "depuis la 3D vers la 2D pour pouvoir rendre sur un Canvas HTML5 en 2D."
+		"PROJECTS_MORE_FDF_DESCRIPTION_PART_2": "depuis la 3D vers la 2D pour pouvoir rendre sur un Canvas HTML5 en 2D.",
+
+		"PROJECTS_MORE_CLOTHERV2_DESCRIPTION": "Clother V2 est le portage webgl en utilisant Three.JS du projet que j'avais à l'origine développé en C++ avec OpenGL lors de mon année à San Diego."
 	}
 }
