@@ -94,7 +94,7 @@
 		"HEADER_PORTFOLIO": "Portfolio",
 		"HEADER_ABOUT_ME": "À propos",
 
-		"INTRO_SKILLS": "Developpement Logiciel - Infographie - Nouvelles Technologies",
+		"INTRO_SKILLS": "Developpement Logiciel - Computer Graphics - Nouvelles Technologies",
 
 		"PORTFOLIO_TITLE": "Portfolio",
 		"PORTFOLIO_NAOCAR_DESCRIPTION": "Un robot conduit de façon autonome",
@@ -109,8 +109,8 @@
 		"ABOUT_ME_TITLE": "À propos",
 		"ABOUT_ME_BEFORE_EPITECH": "Principalement intéressé par tout ce qui se rapproche du développement logiciel, j'ai commencé à apprendre à programmer à l'age de 14 ans en développant de simples projets en C, Pascal et Flowcode.",
 		"ABOUT_ME_EPITECH": "Ensuite, j'ai étudié à Epitech pour un master d'informatique où j'ai appris à programmer, travailler en équipe et être professionnel.",
-		"ABOUT_ME_SAN_DIEGO": "Durant ma quatrième année, j'ai passé 2 trimestres à UCSD (University of California, San Diego) où j'ai développé mes compétences en infographie (animation et rendu graphique) et en algorithmie.",
-		"ABOUT_ME_NOWADAYS": "Maintenant, je suis spécialement intéressé par l'infographie, and j'aime tout ce qui a des interactions et un rendu graphique ou physique (3D, 2D, robotique etc.).",
+		"ABOUT_ME_SAN_DIEGO": "Durant ma quatrième année, j'ai passé 2 trimestres à UCSD (University of California, San Diego) où j'ai développé mes compétences dans les computer graphics (animation et rendu graphique) et en algorithmie.",
+		"ABOUT_ME_NOWADAYS": "Maintenant, je suis spécialement intéressé par les computer graphics, and j'aime tout ce qui a des interactions et un rendu graphique ou physique (3D, 2D, robotique etc.).",
 		"ABOUT_ME_RESUME_LINK": "data/resume-fr.pdf",
 		"ABOUT_ME_RESUME": "CV",
 
