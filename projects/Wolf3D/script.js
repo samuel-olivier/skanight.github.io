@@ -42,7 +42,7 @@ function intersect(o, d, a, b, k, side) {
 	return k;
 }
 
-function nearestWallDist(d) {
+/*function nearestWallDist(d) {
 	var k = null,
 		o = g.player.position;
 	for (var y = 0; y < g.map.height; ++y) {
@@ -56,13 +56,48 @@ function nearestWallDist(d) {
 		}
 	}
 	return k;
+}*/
+
+function isAWall(x, y, k, dist, side) {
+	if (x >= 0 && x < g.map.width && y >= 0 && y < g.map.height && g.map.tiles[y][x] == 1 && (k == null || dist < k.dist)) {
+		return {dist: dist, side: side};
+	}
+	return k;
+}
+
+function nearestWallDist(p, v, vLength, a, b) {
+	var k = null;
+
+	for (var y = 0; y < g.map.height; ++y) {
+		var x = (y - b) / a,
+			xIdx = x | 0,
+			toIntersection = new Victor(x, y).subtract(p),
+			distance = toIntersection.length();
+
+		if (v.dot(toIntersection) > 0) {
+			k = isAWall(xIdx, y - 1, k, distance, 1);
+			k = isAWall(xIdx, y, k, distance, 3);
+		}
+	}
+	for (var x = 0; x < g.map.width; ++x) {
+		var y = a * x + b,
+			yIdx = y | 0,
+			toIntersection = new Victor(x, y).subtract(p),
+			distance = toIntersection.length();
+
+		if (v.dot(toIntersection) > 0) {
+			k = isAWall(x - 1, yIdx, k, distance, 2);
+			k = isAWall(x, yIdx, k, distance, 4);
+		}
+	}
+	return k;
 }
 
 function updatePlayerPosition(newPos) {
-	var d = newPos.clone().subtract(g.player.position),
-		k = nearestWallDist(d);
+	// var d = newPos.clone().subtract(g.player.position),
+	// 	k = nearestWallDist(d);
 	
-	if (k == null || k.dist > 1) {
+	// if (k == null || k.dist > 1) {
 		g.player.position = newPos;
 	// } else {
 		// var intersection = g.player.position.clone().add(d.clone().multiply(new Victor(k.dist, k.dist))),
@@ -72,13 +107,13 @@ function updatePlayerPosition(newPos) {
 			// finalPos = intersection.add(v.multiply(new Victor(dot, dot)));
 		// g.player.position = finalPos.subtract(finalPos.clone().subtract(g.player.position).normalize().multiply(new Victor(0.1, 0.1)));
 		// updatePlayerPosition(intersection.add(v.multiply(new Victor(dot - 0.1, dot - 0.1))));
-	}
+	// }
 }
 
 function updatePlayer(elapsed) {
 	var p = g.player.position,
-		look = new Victor(0, 1).rotate(g.player.orientation),
-		left = new Victor(-look.y, look.x),
+		look = new Victor(1, 0).rotate(g.player.orientation),
+		left = new Victor(0, -1).rotate(g.player.orientation),
 		move = new Victor(0, 0),
 		distance = g.player.moveSpeed * elapsed,
 		added = 1;
@@ -92,10 +127,10 @@ function updatePlayer(elapsed) {
 	}
 	
 	if (g.keys[37] == true) {
-		move.add(left.clone().invert());
+		move.add(left);
 		++added;
 	} else if (g.keys[39] == true) {
-		move.add(left);
+		move.add(left.clone().invert());
 		++added;
 	}
 	if (added >= 1) {
@@ -105,9 +140,9 @@ function updatePlayer(elapsed) {
 	updatePlayerPosition(g.player.position.clone().add(move));
 	
 	if (g.keys[65] == true) {
-		g.player.orientation -= g.player.turnSpeed * elapsed;
-	} else if (g.keys[68] == true) {
 		g.player.orientation += g.player.turnSpeed * elapsed;
+	} else if (g.keys[68] == true) {
+		g.player.orientation -= g.player.turnSpeed * elapsed;
 	}
 
 }
@@ -120,21 +155,23 @@ function update() {
 	}
 
 	updatePlayer(elapsed);
-	
 	g.lastUpdate = new Date().getTime();
 }
 
 function drawWalls() {
 	var cWidth = g.canvas.width(),
-		cHeight = g.canvas.height(),
-		screenWidth = 2 * Math.atan(g.conf.hFOV / 2);
-	for (var x = 0; x < cWidth; ++x) {
-		var p = (-screenWidth / 2) + screenWidth * (cWidth - x) / cWidth,
-			d = new Victor(p, 1).normalize().rotate(g.player.orientation),
-			k = nearestWallDist(d);
+		cHeight = g.canvas.height();
 
+	for (var x = 0.0; x < cWidth; ++x) {
+		var p1 = g.player.position,
+			p2 = new Victor(g.conf.D, -g.conf.P * ((cWidth / 2.0) - x) / cWidth).rotate(g.player.orientation).add(g.player.position),
+			v = p2.clone().subtract(p1),
+			a = v.y / v.x,
+			b = (p2.x * p1.y - p1.x * p2.y) / v.x,
+			vLength = v.length();
+		k = nearestWallDist(p1, v, vLength, a, b);
 		if (k != null) {
-			var halfHeight = 0.5 * cHeight / (k.dist * 0.9);
+			var halfHeight = cHeight / (2.0 * (k.dist / (vLength / g.conf.D)));
 			var color = "#CE2E12";
 			if (k.side == 2) {
 				color = "#ED4D31";
@@ -144,10 +181,6 @@ function drawWalls() {
 				color = "#A9260F";
 			}
 			drawRect(x, cHeight / 2 - halfHeight, 1, 2 * halfHeight, color);
-			// drawLine(x, cHeight / 2 - halfHeight, x, cHeight / 2 + halfHeight, color);
-			// for (var y = cHeight / 2 - halfHeight; y < cHeight / 2 + halfHeight; ++y) {
-			// 	drawPixel(x, y, color);
-			// }
 		}
 	}
 }
@@ -163,7 +196,8 @@ $(function() {
 	
 	g.conf = {
 		fps: 30,
-		hFOV: 1.98967535,
+		D: 0.5,
+		P: 1.0,
 		skyColor: "#87CEEB",
 		floorColor: "#784800"
 	};
@@ -184,7 +218,7 @@ $(function() {
 	};
 	
 	g.player = {
-		position: new Victor(1.5, 1.5),
+		position: new Victor(1.5, 0.5),
 		orientation: 0.0,
 		moveSpeed: 2,
 		turnSpeed: 2.5
