@@ -28,69 +28,100 @@ function drawBackground() {
 	drawRect(0, g.canvas.height() / 2, g.canvas.width(), g.canvas.height() / 2, g.conf.floorColor);
 }
 
-function intersect(o, d, a, b, k, side) {
-	var v1 = o.clone().subtract(a),
-		v2 = b.clone().subtract(a),
-		v3 = Victor(-d.y, d.x);
-	
-	var t1 = v2.cross(v1) / v2.dot(v3);
-	var t2 = v1.dot(v3) / v2.dot(v3);
-
-	if (t1 > 0 && t2 >= 0 && t2 <= 1) {
-		return (k == null || k.dist > t1) ? {dist: t1, side: side, a: a, b: b, t2: t2} : k;
+function affineIntersection(a1, b1, a2, b2) {
+	if ((b1 === null && b2 === null) || a1 === a2) {
+		return null;
+	} else if (b1 === null) {
+		return new Victor(a1, a2 * a1 + b2);
+	} else if (b2 === null) {
+		return new Victor(a2, a1 * a2 + b1);
 	}
-	return k;
+	var y = (a2 * b1 - a1 * b2) / (a2 - a1);
+
+	return new Victor(a1 !== 0.0 ? ((y - b1) / a1) : ((y - b2) / a2), y);
 }
 
-/*function nearestWallDist(d) {
-	var k = null,
-		o = g.player.position;
-	for (var y = 0; y < g.map.height; ++y) {
-		for (var x = 0; x < g.map.width; ++x) {
-			if (g.map.tiles[y][x] != 0) {
-				k = intersect(o, d, Victor(x, y), Victor(x + 1, y), k, 1);
-				k = intersect(o, d, Victor(x, y), Victor(x, y + 1), k, 2);
-				k = intersect(o, d, Victor(x + 1, y + 1), Victor(x + 1, y), k, 3);
-				k = intersect(o, d, Victor(x + 1, y + 1), Victor(x, y + 1), k, 4);
+function findInsertionIdx(k, v) {
+	for (var i = 0; i < k.length; ++i) {
+		if (v <= k[i].dist) {
+			return i;
+		} 
+	}
+	return k.length;
+}
+
+function interpolate(v1, v2, delta) {
+	return v1 + (v2 - v1) * delta;
+}
+
+function isInWall(inter, wall) {
+	return ((inter.x >= wall.from.x && inter.x <= wall.to.x) || (inter.x >= wall.to.x && inter.x <= wall.from.x)) &&
+			((inter.y >= wall.from.y && inter.y <= wall.to.y) || (inter.y >= wall.to.y && inter.y <= wall.from.y));
+}
+
+function nearestWallDist(p, v, vLength, a, b) {
+	var k = [];
+
+	for (var i = 0; i < g.map.walls.length; ++i) {
+		var wall = g.map.walls[i],
+			wV = new Victor(wall.to.x - wall.from.x, wall.to.y - wall.from.y),
+			wA = (wV.x === 0) ? wall.from.x : (wV.y / wV.x),
+			wB = (wV.x === 0) ? null : ((wall.to.x * wall.from.y - wall.from.x * wall.to.y) / wV.x),
+			inter = affineIntersection(a, b, wA, wB);
+
+		if (inter !== null) {
+			var toInter = inter.clone().subtract(p);
+			if (toInter.dot(v) >= 0) {
+				var dist = toInter.length();
+
+				if (isInWall(inter, wall)) {
+					var diffX = wall.to.x - wall.from.x,
+						diffY = wall.to.y - wall.from.y,
+						ratio = diffX === 0 ? ((inter.y - wall.from.y) / diffY) : ((inter.x - wall.from.x) / diffX);
+					k.splice(findInsertionIdx(k, dist), 0, {dist: dist, wall: wall, ratio: ratio});
+				}
 			}
 		}
 	}
 	return k;
-}*/
-
-function isAWall(x, y, k, dist, side) {
-	if (x >= 0 && x < g.map.width && y >= 0 && y < g.map.height && g.map.tiles[y][x] == 1 && (k == null || dist < k.dist)) {
-		return {dist: dist, side: side};
-	}
-	return k;
 }
 
-function nearestWallDist(p, v, vLength, a, b) {
-	var k = null;
+function drawWalls() {
+	var cWidth = g.canvas.width(),
+		cHeight = g.canvas.height();
 
-	for (var y = 0; y < g.map.height; ++y) {
-		var x = (y - b) / a,
-			xIdx = x | 0,
-			toIntersection = new Victor(x, y).subtract(p),
-			distance = toIntersection.length();
-
-		if (v.dot(toIntersection) > 0) {
-			k = isAWall(xIdx, y - 1, k, distance, 1);
-			k = isAWall(xIdx, y, k, distance, 3);
+	for (var x = 0.0; x < cWidth; ++x) {
+		if (x === cWidth / 2.0) {
+			x = x;
 		}
-	}
-	for (var x = 0; x < g.map.width; ++x) {
-		var y = a * x + b,
-			yIdx = y | 0,
-			toIntersection = new Victor(x, y).subtract(p),
-			distance = toIntersection.length();
-
-		if (v.dot(toIntersection) > 0) {
-			k = isAWall(x - 1, yIdx, k, distance, 2);
-			k = isAWall(x, yIdx, k, distance, 4);
+		var p1 = g.player.position,
+			p2 = new Victor(g.conf.D, -g.conf.P * ((cWidth / 2.0) - x) / cWidth).rotate(g.player.orientation).add(g.player.position),
+			v = p2.clone().subtract(p1),
+			a = (v.x === 0) ? p1.x : (v.y / v.x),
+			b = (v.x === 0) ? null : ((p2.x * p1.y - p1.x * p2.y) / v.x),
+			vLength = v.length(),
+			k = nearestWallDist(p1, v, vLength, a, b);
+		if (k.length != 0) {
+			for (var i = k.length - 1; i >= 0; --i) {
+				var current = k[i],
+					halfHeight = cHeight / (2.0 * (current.dist / (vLength / g.conf.D))),
+					unitHeight = halfHeight * 2.0;
+					color = "#CE2E12",
+					interpolatedHeight = interpolate(current.wall.from.height, current.wall.to.height, current.ratio),
+					interpolatedZ = interpolate(current.wall.from.z, current.wall.to.z, current.ratio),
+					diffZ = g.player.z - interpolatedZ;
+				if (v.dot(current.wall.normal) >= 0) {
+					color = "#888888";
+				}
+				drawRect(x, cHeight / 2 + halfHeight + diffZ * unitHeight, 1, -unitHeight * interpolatedHeight, color);
+			}
 		}
-	}
-	return k;
+	
+}}
+
+function draw() {
+	drawBackground();
+	drawWalls();
 }
 
 function updatePlayerPosition(newPos) {
@@ -140,9 +171,9 @@ function updatePlayer(elapsed) {
 	updatePlayerPosition(g.player.position.clone().add(move));
 	
 	if (g.keys[65] == true) {
-		g.player.orientation += g.player.turnSpeed * elapsed;
-	} else if (g.keys[68] == true) {
 		g.player.orientation -= g.player.turnSpeed * elapsed;
+	} else if (g.keys[68] == true) {
+		g.player.orientation += g.player.turnSpeed * elapsed;
 	}
 
 }
@@ -158,38 +189,6 @@ function update() {
 	g.lastUpdate = new Date().getTime();
 }
 
-function drawWalls() {
-	var cWidth = g.canvas.width(),
-		cHeight = g.canvas.height();
-
-	for (var x = 0.0; x < cWidth; ++x) {
-		var p1 = g.player.position,
-			p2 = new Victor(g.conf.D, -g.conf.P * ((cWidth / 2.0) - x) / cWidth).rotate(g.player.orientation).add(g.player.position),
-			v = p2.clone().subtract(p1),
-			a = v.y / v.x,
-			b = (p2.x * p1.y - p1.x * p2.y) / v.x,
-			vLength = v.length();
-		k = nearestWallDist(p1, v, vLength, a, b);
-		if (k != null) {
-			var halfHeight = cHeight / (2.0 * (k.dist / (vLength / g.conf.D)));
-			var color = "#CE2E12";
-			if (k.side == 2) {
-				color = "#ED4D31";
-			} else if (k.side == 3) {
-				color = "#71190A";
-			} else {
-				color = "#A9260F";
-			}
-			drawRect(x, cHeight / 2 - halfHeight, 1, 2 * halfHeight, color);
-		}
-	}
-}
-
-function draw() {
-	drawBackground();
-	drawWalls();
-}
-
 $(function() {
 	g.canvas = $("#myCanvas");
 	g.context = g.canvas[0].getContext("2d");
@@ -203,24 +202,19 @@ $(function() {
 	};
 	
 	g.map = {
-		width: 10,
-		height: 8,
-		tiles: [
-			[1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
-			[1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-			[1, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-			[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-			[1, 0, 0, 1, 0, 0, 1, 1, 1, 1],
-			[1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-			[1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+		walls: [
+			{from: {x: 3.0, y: -1.0, z: 1.0, height: 1.0}, to: {x: 3.0, y: 1.0, z: 1.0, height: 1.0}, normal: new Victor(-1.0, 0.0)},
+			{from: {x: 4.0, y: -1.0, z: 1.0, height: 1.0}, to: {x: 4.0, y: 1.0, z: 1.0, height: 1.0}, normal: new Victor(1.0, 0.0)},
+			{from: {x: 3.0, y: -1.0, z: 1.0, height: 1.0}, to: {x: 4.0, y: -1.0, z: 1.0, height: 1.0}, normal: new Victor(0.0, -1.0)},
+			{from: {x: 3.0, y: 1.0, z: 1.0, height: 1.0}, to: {x: 4.0, y: 1.0, z: 1.0, height: 1.0}, normal: new Victor(0.0, 1.0)}
 		]
 	};
 	
 	g.player = {
-		position: new Victor(1.5, 0.5),
+		position: new Victor(0.0, 0.0),
+		z: 0.0,
 		orientation: 0.0,
-		moveSpeed: 2,
+		moveSpeed: 2.0,
 		turnSpeed: 2.5
 	};
 
