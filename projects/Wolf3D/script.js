@@ -54,31 +54,36 @@ function interpolate(v1, v2, delta) {
 	return v1 + (v2 - v1) * delta;
 }
 
-function isInWall(inter, wall) {
-	return ((inter.x >= wall.from.x && inter.x <= wall.to.x) || (inter.x >= wall.to.x && inter.x <= wall.from.x)) &&
-			((inter.y >= wall.from.y && inter.y <= wall.to.y) || (inter.y >= wall.to.y && inter.y <= wall.from.y));
+function isInWall(inter, from, to) {
+	return ((inter.x >= from.x && inter.x <= to.x) || (inter.x >= to.x && inter.x <= from.x)) &&
+			((inter.y >= from.y && inter.y <= to.y) || (inter.y >= to.y && inter.y <= from.y));
 }
 
 function nearestWallDist(p, v, vLength, a, b) {
 	var k = [];
 
 	for (var i = 0; i < g.map.walls.length; ++i) {
-		var wall = g.map.walls[i],
-			wV = new Victor(wall.to.x - wall.from.x, wall.to.y - wall.from.y),
-			wA = (wV.x === 0) ? wall.from.x : (wV.y / wV.x),
-			wB = (wV.x === 0) ? null : ((wall.to.x * wall.from.y - wall.from.x * wall.to.y) / wV.x),
-			inter = affineIntersection(a, b, wA, wB);
+		var wall = g.map.walls[i];
 
-		if (inter !== null) {
-			var toInter = inter.clone().subtract(p);
-			if (toInter.dot(v) >= 0) {
-				var dist = toInter.length();
+		for (var j = 0; j < wall.length - 1; ++j) {
+			var from = wall[j],
+				to = wall[j + 1],
+				wV = new Victor(to.x - from.x, to.y - from.y),
+				wA = (wV.x === 0) ? from.x : (wV.y / wV.x),
+				wB = (wV.x === 0) ? null : ((to.x * from.y - from.x * to.y) / wV.x),
+				inter = affineIntersection(a, b, wA, wB);
 
-				if (isInWall(inter, wall)) {
-					var diffX = wall.to.x - wall.from.x,
-						diffY = wall.to.y - wall.from.y,
-						ratio = diffX === 0 ? ((inter.y - wall.from.y) / diffY) : ((inter.x - wall.from.x) / diffX);
-					k.splice(findInsertionIdx(k, dist), 0, {dist: dist, wall: wall, ratio: ratio});
+			if (inter !== null) {
+				var toInter = inter.clone().subtract(p);
+				if (toInter.dot(v) >= 0) {
+					var dist = toInter.length();
+
+					if (isInWall(inter, from, to)) {
+						var diffX = to.x - from.x,
+							diffY = to.y - from.y,
+							ratio = diffX === 0 ? ((inter.y - from.y) / diffY) : ((inter.x - from.x) / diffX);
+						k.splice(findInsertionIdx(k, dist), 0, {dist: dist, wallIdx: i, sectionIdx: j, ratio: ratio});
+					}
 				}
 			}
 		}
@@ -106,11 +111,15 @@ function drawWalls() {
 				var current = k[i],
 					halfHeight = cHeight / (2.0 * (current.dist / (vLength / g.conf.D))),
 					unitHeight = halfHeight * 2.0;
-					color = "#CE2E12",
-					interpolatedHeight = interpolate(current.wall.from.height, current.wall.to.height, current.ratio),
-					interpolatedZ = interpolate(current.wall.from.z, current.wall.to.z, current.ratio),
-					diffZ = g.player.z - interpolatedZ;
-				if (v.dot(current.wall.normal) >= 0) {
+					interpolatedHeight = interpolate(g.map.walls[current.wallIdx][current.sectionIdx].height, g.map.walls[current.wallIdx][current.sectionIdx + 1].height, current.ratio),
+					interpolatedZ = interpolate(g.map.walls[current.wallIdx][current.sectionIdx].z, g.map.walls[current.wallIdx][current.sectionIdx + 1].z, current.ratio),
+					diffZ = g.player.z - interpolatedZ,
+					normal = g.map.walls[current.wallIdx][current.sectionIdx].normal,
+					cosA = (1.0 + normal.dot(g.conf.sunDirection)) / 2.0,
+					factor = 1.0 - g.conf.sunFactor + cosA * g.conf.sunFactor; 
+					color = "rgb(" + ~~(g.conf.wallColor.r * factor) + "," + ~~(g.conf.wallColor.g * factor) + "," + ~~(g.conf.wallColor.b * factor) + ")";
+
+				if (v.dot(normal) >= 0) {
 					color = "#888888";
 				}
 				drawRect(x, cHeight / 2 + halfHeight + diffZ * unitHeight, 1, -unitHeight * interpolatedHeight, color);
@@ -198,15 +207,21 @@ $(function() {
 		D: 0.5,
 		P: 1.0,
 		skyColor: "#87CEEB",
-		floorColor: "#784800"
+		floorColor: "#784800",
+		wallColor: {r: 240, g: 55, b: 55},
+		sunFactor: 0.3,
+		sunDirection: new Victor(2.0, 1.0).normalize()
 	};
 	
 	g.map = {
 		walls: [
-			{from: {x: 3.0, y: -1.0, z: 1.0, height: 1.0}, to: {x: 3.0, y: 1.0, z: 1.0, height: 1.0}, normal: new Victor(-1.0, 0.0)},
-			{from: {x: 4.0, y: -1.0, z: 1.0, height: 1.0}, to: {x: 4.0, y: 1.0, z: 1.0, height: 1.0}, normal: new Victor(1.0, 0.0)},
-			{from: {x: 3.0, y: -1.0, z: 1.0, height: 1.0}, to: {x: 4.0, y: -1.0, z: 1.0, height: 1.0}, normal: new Victor(0.0, -1.0)},
-			{from: {x: 3.0, y: 1.0, z: 1.0, height: 1.0}, to: {x: 4.0, y: 1.0, z: 1.0, height: 1.0}, normal: new Victor(0.0, 1.0)}
+			[
+				{x: 3.0, y: -1.0, z: 0.0, height: 1.0, normal: new Victor(-1.0, 0.0)},
+				{x: 3.0, y: 1.0, z: 0.0, height: 1.0, normal: new Victor(0.0, 1.0)},
+				{x: 4.0, y: 1.0, z: 0.0, height: 1.0, normal: new Victor(1.0, 0.0)},
+				{x: 4.0, y: -1.0, z: 0.0, height: 1.0, normal: new Victor(0.0, -1.0)},
+				{x: 3.0, y: -1.0, z: 0.0, height: 1.0}
+			]
 		]
 	};
 	
