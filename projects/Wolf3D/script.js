@@ -235,8 +235,8 @@ $(function() {
 		walls: [
 			[
 				{x: 4.2, y: -4.0, z: 1.0, height: 1.0, normal: new Victor(-1.0, 0.0)},
-				{x: 4.2, y: 4.0, z: 1.0, height: 1.0, normal: new Victor(0.0, 1.0)},
-				{x: 5.0, y: 4.0, z: 1.0, height: 1.0, normal: new Victor(1.0, 0.0)},
+				{x: 4.2, y: 4.0, z: 1.0, height: 3.0, normal: new Victor(0.0, 1.0)},
+				{x: 5.0, y: 4.0, z: 1.0, height: 3.0, normal: new Victor(1.0, 0.0)},
 				{x: 5.0, y: -4.0, z: 1.0, height: 1.0, normal: new Victor(0.0, -1.0)},
 				{x: 4.2, y: -4.0, z: 1.0, height: 1.0}
 			],
