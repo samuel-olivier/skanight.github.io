@@ -1,4 +1,5 @@
 var g = {};
+var toCheckX = -1;
 
 function drawLine(x1, y1, x2, y2, color) {
 	g.context.strokeStyle = color;
@@ -55,8 +56,11 @@ function interpolate(v1, v2, delta) {
 }
 
 function isInWall(inter, from, to) {
-	return ((inter.x >= from.x && inter.x <= to.x) || (inter.x >= to.x && inter.x <= from.x)) &&
-			((inter.y >= from.y && inter.y <= to.y) || (inter.y >= to.y && inter.y <= from.y));
+	return inter != null &&
+		((from.x - inter.x < g.conf.EPSILON && inter.x - to.x < g.conf.EPSILON) ||
+		 (to.x - inter.x < g.conf.EPSILON && inter.x - from.x < g.conf.EPSILON)) &&
+		((from.y - inter.y < g.conf.EPSILON && inter.y - to.y < g.conf.EPSILON) ||
+		 (to.y - inter.y < g.conf.EPSILON && inter.y - from.y < g.conf.EPSILON));
 }
 
 function nearestWallDist(p, v, vLength, a, b) {
@@ -73,18 +77,16 @@ function nearestWallDist(p, v, vLength, a, b) {
 				wB = (wV.x === 0) ? null : ((to.x * from.y - from.x * to.y) / wV.x),
 				inter = affineIntersection(a, b, wA, wB);
 
-			if (inter !== null) {
+			if (isInWall(inter, from, to)) {
 				var toInter = inter.clone().subtract(p);
-				if (toInter.dot(v) >= 0) {
-					var dist = toInter.length();
-
-					if (isInWall(inter, from, to)) {
-						var diffX = to.x - from.x,
-							diffY = to.y - from.y,
-							ratio = diffX === 0 ? ((inter.y - from.y) / diffY) : ((inter.x - from.x) / diffX);
-						k.splice(findInsertionIdx(k, dist), 0, {dist: dist, wallIdx: i, sectionIdx: j, ratio: ratio});
-					}
+				var dist = toInter.length();
+				if (toInter.dot(v) < 0) {
+					dist *= -1;
 				}
+				var diffX = to.x - from.x,
+					diffY = to.y - from.y,
+					ratio = diffX === 0 ? ((inter.y - from.y) / diffY) : ((inter.x - from.x) / diffX);
+				k.splice(findInsertionIdx(k, dist), 0, {dist: dist, wallIdx: i, sectionIdx: j, ratio: ratio});
 			}
 		}
 	}
@@ -96,8 +98,8 @@ function drawWalls() {
 		cHeight = g.canvas.height();
 
 	for (var x = 0.0; x < cWidth; ++x) {
-		if (x === cWidth / 2.0) {
-			x = x;
+		if (x == toCheckX) {
+			toCheckX = -1;
 		}
 		var p1 = g.player.position,
 			p2 = new Victor(g.conf.D, -g.conf.P * ((cWidth / 2.0) - x) / cWidth).rotate(g.player.orientation).add(g.player.position),
@@ -107,22 +109,36 @@ function drawWalls() {
 			vLength = v.length(),
 			k = nearestWallDist(p1, v, vLength, a, b);
 		if (k.length != 0) {
+			var intersectedWalls = {};
 			for (var i = k.length - 1; i >= 0; --i) {
 				var current = k[i],
-					halfHeight = cHeight / (2.0 * (current.dist / (vLength / g.conf.D))),
-					unitHeight = halfHeight * 2.0;
 					interpolatedHeight = interpolate(g.map.walls[current.wallIdx][current.sectionIdx].height, g.map.walls[current.wallIdx][current.sectionIdx + 1].height, current.ratio),
 					interpolatedZ = interpolate(g.map.walls[current.wallIdx][current.sectionIdx].z, g.map.walls[current.wallIdx][current.sectionIdx + 1].z, current.ratio),
 					diffZ = g.player.z - interpolatedZ,
-					normal = g.map.walls[current.wallIdx][current.sectionIdx].normal,
-					cosA = (1.0 + normal.dot(g.conf.sunDirection)) / 2.0,
-					factor = 1.0 - g.conf.sunFactor + cosA * g.conf.sunFactor; 
-					color = "rgb(" + ~~(g.conf.wallColor.r * factor) + "," + ~~(g.conf.wallColor.g * factor) + "," + ~~(g.conf.wallColor.b * factor) + ")";
-
-				if (v.dot(normal) >= 0) {
-					color = "#888888";
+					normal = g.map.walls[current.wallIdx][current.sectionIdx].normal;
+				if (current.dist > 0) {
+					var cosA = (1.0 + normal.dot(g.conf.sunDirection)) / 2.0,
+						factor = 1.0 - g.conf.sunFactor + cosA * g.conf.sunFactor,
+						color = "rgb(" + ~~(g.conf.wallColor.r * factor) + "," + ~~(g.conf.wallColor.g * factor) + "," + ~~(g.conf.wallColor.b * factor) + ")",
+						halfHeight = cHeight / (2.0 * (current.dist / (vLength / g.conf.D))),
+						unitHeight = halfHeight * 2.0;
+						rect = {start: cHeight / 2 + halfHeight + diffZ * unitHeight, height: -unitHeight * interpolatedHeight};
+					if (v.dot(normal) >= 0) {
+						intersectedWalls[current.wallIdx] = {start: rect.start + rect.height / 2, z: interpolatedZ};
+						color = g.conf.insideColor;
+					} else if (intersectedWalls[current.wallIdx] !== undefined) {
+						var middle = rect.start + rect.height / 2; 
+						drawRect(x, middle, 1, intersectedWalls[current.wallIdx].start - middle, g.conf.insideColor);
+					}
+					drawRect(x, rect.start, 1, rect.height, color);
+				} else if (intersectedWalls[current.wallIdx] !== undefined) {
+					var toScreenHeight = -intersectedWalls[current.wallIdx].start;
+					if (intersectedWalls[current.wallIdx].z < g.player.z) {
+						toScreenHeight += cHeight;
+					}
+					drawRect(x, intersectedWalls[current.wallIdx].start, 1, toScreenHeight, g.conf.insideColor);
 				}
-				drawRect(x, cHeight / 2 + halfHeight + diffZ * unitHeight, 1, -unitHeight * interpolatedHeight, color);
+
 			}
 		}
 	
@@ -210,23 +226,39 @@ $(function() {
 		floorColor: "#784800",
 		wallColor: {r: 240, g: 55, b: 55},
 		sunFactor: 0.3,
-		sunDirection: new Victor(2.0, 1.0).normalize()
+		sunDirection: new Victor(2.0, 1.0).normalize(),
+		insideColor: "#888888",
+		EPSILON: 0.00001
 	};
 	
 	g.map = {
 		walls: [
 			[
-				{x: 3.0, y: -1.0, z: 0.0, height: 1.0, normal: new Victor(-1.0, 0.0)},
-				{x: 3.0, y: 1.0, z: 0.0, height: 1.0, normal: new Victor(0.0, 1.0)},
-				{x: 4.0, y: 1.0, z: 0.0, height: 1.0, normal: new Victor(1.0, 0.0)},
-				{x: 4.0, y: -1.0, z: 0.0, height: 1.0, normal: new Victor(0.0, -1.0)},
-				{x: 3.0, y: -1.0, z: 0.0, height: 1.0}
+				{x: 4.2, y: -4.0, z: 1.0, height: 1.0, normal: new Victor(-1.0, 0.0)},
+				{x: 4.2, y: 4.0, z: 1.0, height: 1.0, normal: new Victor(0.0, 1.0)},
+				{x: 5.0, y: 4.0, z: 1.0, height: 1.0, normal: new Victor(1.0, 0.0)},
+				{x: 5.0, y: -4.0, z: 1.0, height: 1.0, normal: new Victor(0.0, -1.0)},
+				{x: 4.2, y: -4.0, z: 1.0, height: 1.0}
+			],
+			[
+				{x: 4.2, y: -4.0, z: 0.0, height: 1.0, normal: new Victor(-1.0, 0.0)},
+				{x: 4.2, y: -3.0, z: 0.0, height: 1.0, normal: new Victor(0.0, 1.0)},
+				{x: 5.0, y: -3.0, z: 0.0, height: 1.0, normal: new Victor(1.0, 0.0)},
+				{x: 5.0, y: -4.0, z: 0.0, height: 1.0, normal: new Victor(0.0, -1.0)},
+				{x: 4.2, y: -4.0, z: 0.0, height: 1.0}
+			],
+			[
+				{x: 4.2, y: 3.0, z: 0.0, height: 1.0, normal: new Victor(-1.0, 0.0)},
+				{x: 4.2, y: 4.0, z: 0.0, height: 1.0, normal: new Victor(0.0, 1.0)},
+				{x: 5.0, y: 4.0, z: 0.0, height: 1.0, normal: new Victor(1.0, 0.0)},
+				{x: 5.0, y: 3.0, z: 0.0, height: 1.0, normal: new Victor(0.0, -1.0)},
+				{x: 4.2, y: 3.0, z: 0.0, height: 1.0}
 			]
 		]
 	};
 	
 	g.player = {
-		position: new Victor(0.0, 0.0),
+		position: new Victor(0.1, 0.1),
 		z: 0.0,
 		orientation: 0.0,
 		moveSpeed: 2.0,
@@ -246,5 +278,9 @@ $(function() {
 
 	$(document).keyup(function(event) {
 		g.keys[event.keyCode] = false;
+	});
+
+	$("#myCanvas").click(function(event) {
+		toCheckX = event.offsetX;
 	});
 });
