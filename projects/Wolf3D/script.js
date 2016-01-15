@@ -56,11 +56,11 @@ function interpolate(v1, v2, delta) {
 }
 
 function isInWall(inter, from, to) {
-	return inter != null &&
-		((from.x - inter.x < g.conf.EPSILON && inter.x - to.x < g.conf.EPSILON) ||
-		 (to.x - inter.x < g.conf.EPSILON && inter.x - from.x < g.conf.EPSILON)) &&
-		((from.y - inter.y < g.conf.EPSILON && inter.y - to.y < g.conf.EPSILON) ||
-		 (to.y - inter.y < g.conf.EPSILON && inter.y - from.y < g.conf.EPSILON));
+	return (inter != null &&
+			((from.x - inter.x < g.conf.EPSILON && inter.x - to.x < g.conf.EPSILON) ||
+		 	 (to.x - inter.x < g.conf.EPSILON && inter.x - from.x < g.conf.EPSILON)) &&
+			((from.y - inter.y < g.conf.EPSILON && inter.y - to.y < g.conf.EPSILON) ||
+		 	 (to.y - inter.y < g.conf.EPSILON && inter.y - from.y < g.conf.EPSILON));
 }
 
 function nearestWallDist(p, v, vLength, a, b) {
